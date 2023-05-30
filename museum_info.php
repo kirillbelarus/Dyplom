@@ -146,15 +146,70 @@
 										
 									echo "</div>";
 								echo "</div>";
+								echo "<div id='map' style='width: 100%; height:500px'></div>";
 						echo "</div>";
+						$adress = $row['adress'];
+						$ch = curl_init('https://geocode-maps.yandex.ru/1.x/?apikey=f454d8d6-5999-4751-944c-fca88ad04479&format=json&geocode=' . urlencode($adress));
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+						curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+						curl_setopt($ch, CURLOPT_HEADER, false);
+						$res = curl_exec($ch);
+						curl_close($ch);
+						
+						$res = json_decode($res, true);
+						// print_r($res);
+						function round_up($value, $places)
+						{
+							$mult = pow(10, abs($places));
+							return $places < 0 ?
+							ceil($value / $mult) * $mult :
+								ceil($value * $mult) / $mult;
+						}
+						$coordinates = $res['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos'];
+						$coordinates = explode(' ', $coordinates);
+						// print_r($coordinates);
+						// echo "<br>";
+						// print_r($coordinates[0]);
+						// echo "<br>";
+						// print_r($coordinates[1]);
+						// echo "<br>";  
+						$first_coord = $coordinates[1];
+						$second_coord =$coordinates[0];
+						// echo $first_coord;
 				}
-			mysqli_free_result($result);
+			// mysqli_free_result($result);
 			}
-			mysqli_close($link);
+			// mysqli_close($link);
 		?>
 	
 	
 </section>
+
+
+      <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+      <script type="text/javascript">
+var coordinator_first = '<?php echo $first_coord;?>';
+var coordinator_second = '<?php echo $second_coord;?>';
+  ymaps.ready(init);		
+  function init() {
+    // alert($second_coord);
+    // alert("d");
+    var myMap = new ymaps.Map("map", {
+      center: [coordinator_first,coordinator_second],
+      zoom: 18
+    }, {
+      searchControlProvider: 'yandex#search'
+    });
+  // console.log($second_coord);
+  // console.log('i like');
+	var myPlacemark = new ymaps.Placemark([coordinator_first,coordinator_second], {
+		iconCaption: 'музей находится здесь'
+	}, {
+		preset: 'islands#pinkDotIcon'
+	});
+	myMap.geoObjects.add(myPlacemark)
+}
+</script>
 	<script src="js/jquery.min.js"></script>
   <script src="js/popper.js"></script>
   <script src="js/bootstrap.min.js"></script>

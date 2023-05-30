@@ -86,7 +86,7 @@ insert into Organiz values(1,'Girel',12131,'kotjmot@yandex.by','dfhsjfh');
 insert into Organiz values(2,'Ivan',21131,'zkrokaz@yandex.ru','dfhsjfh');
 insert into Organiz values(3,'Lesha',952131,'kartoshka@yandex.by','dfhsjfh');
 
-insert into Catalog_Museum values(1,'Национальный художественный','ул. Ленина, 20 — Главный корпус. Выставочный корпус — ул. Карла Маркса, 24','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/99.jpg',1);
+insert into Catalog_Museum values(1,'Национальный художественный','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/99.jpg',1);
 insert into Catalog_Museum values(2,'Национальный исторический','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/56.jpg',2);
 insert into Catalog_Museum values(3,'Дом Ваньковичей','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/vank.jpg',3);
 insert into Catalog_Museum values(4,'Янка Купала','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','yanka@yandex.by','16:45-18:12','./images/Yanka.jpg',1);
