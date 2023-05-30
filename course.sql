@@ -13,8 +13,8 @@ create table Organiz(
 create table Catalog_Museum(
 	id_museum int auto_increment primary key,
     name_museum varchar(80),
-    adress varchar(50),
-    tel int,
+    adress varchar(100),
+    tel varchar(80),
     e_mail varchar(20),
     time_work varchar(20),
     photo varchar(20),
@@ -86,10 +86,10 @@ insert into Organiz values(1,'Girel',12131,'kotjmot@yandex.by','dfhsjfh');
 insert into Organiz values(2,'Ivan',21131,'zkrokaz@yandex.ru','dfhsjfh');
 insert into Organiz values(3,'Lesha',952131,'kartoshka@yandex.by','dfhsjfh');
 
-insert into Catalog_Museum values(1,'Национальный художественный','центр',141322132,'kgirel@yandex.by','16:45-18:12','./images/99.jpg',1);
-insert into Catalog_Museum values(2,'Национальный исторический','окраина',6756543,'kgirel@yandex.by','16:45-18:12','./images/56.jpg',2);
-insert into Catalog_Museum values(3,'Дом Ваньковичей','незавимимости',921313,'kgirel@yandex.by','16:45-18:12','./images/vank.jpg',3);
-insert into Catalog_Museum values(4,'Янка Купала','незавимимости',921313,'yanka@yandex.by','16:45-18:12','./images/Yanka.jpg',1);
+insert into Catalog_Museum values(1,'Национальный художественный','ул. Ленина, 20 — Главный корпус. Выставочный корпус — ул. Карла Маркса, 24','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/99.jpg',1);
+insert into Catalog_Museum values(2,'Национальный исторический','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/56.jpg',2);
+insert into Catalog_Museum values(3,'Дом Ваньковичей','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/vank.jpg',3);
+insert into Catalog_Museum values(4,'Янка Купала','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','yanka@yandex.by','16:45-18:12','./images/Yanka.jpg',1);
 
 insert into Afisha values(1,1,1,'ждите нас, звезды!','выставка','2023-11-11','2023-12-31','./images/1.jpg',5,'художественная');
 insert into Afisha values(2,2,2,'секреты нового года','лекция','2023-11-11','2023-12-31','./images./2.jpg',15,'этнографическая');
@@ -99,7 +99,7 @@ insert into Afisha values(5,1,3,'опен шаф','выставка','2023-11-11
 insert into Afisha values(6,2,3,'духовой квинтет','выставка','2023-11-11','2023-12-31','./images./6.jpg',0,'этнографическая');
 insert into Afisha values(7,1,1,'вандровка','лекция','2023-11-11','2023-12-29','./images./7.jpg',0,'художественная');
 insert into Afisha values(8,1,1,'братство среди друзей','лекция','2023-11-11','2023-12-31','./images./8.jpg',123,'художественная');
-insert into Afisha values(9,1,1,'никто не разлучит','экскурсия','2023-09-11','2024-01-31','./images./9.jpg',9,'художественная');
+insert into Afisha values(9,1,1,'никто не разлучит','лекция','2023-09-11','2024-01-31','./images./9.jpg',9,'художественная');
 
 insert into Users values(1,'kgirel@yandec.by','kirill1991','xede');
 insert into Users values(2,'girelkirill@yandex.by','kirill1992','xede');
@@ -161,3 +161,6 @@ group by id_user;
 
 SELECT Afisha.num_afish as num_afish,Afisha.data_start as data_start,Afisha.data_end as data_end,Afisha.photo as photo, Afisha.name_afish as name_afish, Catalog_Museum.id_museum 
 from Afisha inner join Catalog_Museum on Afisha.id_museum = Catalog_Museum.id_museum where type_event = 'выставка';
+
+#SELECT Afisha.num_afish as num_afish, Afisha.photo as photo, max(Comments.rating) as rating,Afisha.name_afish as name_afish
+#from Afisha left join Comments on Comments.num_afish = Afisha.num_afish where rating = (Select max(rating) from Afisha) and ;

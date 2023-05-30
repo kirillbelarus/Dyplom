@@ -797,8 +797,21 @@ display: none;
   /* padding-left: 5px; */
   gap: 10px;
   display: flex;
-  align-items: center;
+  /* align-item s: center; */
   margin: 0;
+  width: 250px;
+}
+.name_museum{
+  position: absolute;
+  top: 120px;
+  left: 35%;
+  text-transform: uppercase;
+  color: white;
+  width: 350px;
+  background: #00000094;
+  padding: 10px;
+  text-align: center;
+  font: bold 24px/34px Helvetica, Sans-Serif;
 }
 .inf_museum{
   /* background-color: #000; */

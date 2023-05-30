@@ -40,14 +40,18 @@
 						<li class="nav-item"><a href="./exposition.php" class="nav-link">Выставки</a></li>
 						<li class="nav-item"><a href="lecture.php" class="nav-link">Лекции</a></li>
 						<?php 
+						if(isset($_COOKIE['org']))
+						{
 							if($_COOKIE["org"] == 1):
-							echo "<li class='nav-item '>";
-							echo "<a href='add_afisha.php' class='nav-link active'>Добавить афишу</a>";
-							echo "</li>";
-							echo "<li class='nav-item'>";
-							echo "<a href='add_museum.php' class='nav-link'>Добавить музей</a>";
-							echo "</li>";
-							endif;
+								echo "<li class='nav-item '>";
+								echo "<a href='add_afisha.php' class='nav-link active'>Добавить афишу</a>";
+								echo "</li>";
+								echo "<li class='nav-item'>";
+								echo "<a href='add_museum.php' class='nav-link'>Добавить музей</a>";
+								echo "</li>";
+								endif;
+						}
+							
 						?>	
 					</ul>
 				</div>
@@ -61,9 +65,16 @@
 			</div>
 		</nav>
 	<div class="grid_exposition">
+		
 		<?php 
+		if(isset($_POST['search'])){
+			$sql = "SELECT id_museum, name_museum, adress, e_mail, time_work, photo from Catalog_Museum where name_museum like '%".$_POST['search']."%'";
+		}
+		else{
+			$sql = "SELECT id_museum, name_museum, adress, e_mail, time_work, photo from Catalog_Museum ";
+		}
 			$link = mysqli_connect("localhost", "root", "", "course",3306);
-			if ($result = mysqli_query($link, 'SELECT id_museum, name_museum, adress, e_mail, time_work, photo from Catalog_Museum')) 
+			if ($result = mysqli_query($link, $sql)) 
 			{
 
 				while( $row = mysqli_fetch_assoc($result) )

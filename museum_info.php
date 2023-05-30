@@ -47,6 +47,7 @@
 						<li class="nav-item"><a href="./exposition.php" class="nav-link">Выставки</a></li>
 						<li class="nav-item"><a href="lecture.php" class="nav-link">Лекции</a></li>
 						<?php 
+						if(isset($_COOKIE['org']))
 							if($_COOKIE["org"] == 1):
 							echo "<li class='nav-item '>";
 							echo "<a href='add_afisha.php' class='nav-link active'>Добавить афишу</a>";
@@ -76,7 +77,7 @@
 		</nav>
 
 
-	<div class="grid_museum">
+	
 		<?php 
             $id_museum = filter_var(trim($_POST['id_museum']),FILTER_SANITIZE_STRING);
             // session_start();
@@ -86,52 +87,73 @@
 			{
 				while( $row = mysqli_fetch_assoc($result) )
 				{
-						echo "<img src='$row[photo]' id='museum_info_photo'>";
-						echo "<p class='name_logo_museum'>Мероприятия музея</p>";
-						echo "<div class='block_info_museum'>";
-						$link2 = mysqli_connect("localhost", "root", "", "course",3306);
-                                echo "<div class='exh_museum'>";
-                                    if ($result2 = mysqli_query($link2, "SELECT Afisha.num_afish as num_afish, Afisha.photo as photo, Afisha.name_afish as name_afish from Afisha where id_museum = '$id_museum' ")) 
-                                    {
-                                        while( $pow = mysqli_fetch_assoc($result2) )
-                                        {
-                                            echo "<form action='exh_info.php' class='grid_img' method='post'>";
-                                                echo "<button value='$pow[num_afish]' name='call' class='accept_form'>";
-                                                    echo "<img src='$pow[photo]' width='210' height='300'>";
-                                                    // echo "$row[name_afish]";
-                                                echo "</button>";
-                                            echo "</form>";
-                                        }
-                                    mysqli_free_result($result2);
-                                    }
-                                    mysqli_close($link2);
+					echo "<div class='grid_museum'>";
+					echo "<img src='$row[photo]' id='museum_info_photo'>";
+					echo "<p class='name_museum'>$row[name_museum]</p>";
+							echo "<p class='name_logo_museum' style='color:#250000;'>Мероприятия музея</p>";
+							echo "<div class='block_info_museum'>";
+							$link2 = mysqli_connect("localhost", "root", "", "course",3306);
+									echo "<div class='exh_museum'>";
+										if ($result2 = mysqli_query($link2, "SELECT Afisha.num_afish as num_afish, Afisha.photo as photo, Afisha.name_afish as name_afish from Afisha where id_museum = '$id_museum' ")) 
+										{
+											while( $pow = mysqli_fetch_assoc($result2) )
+											{
+												echo "<form action='exh_info.php' class='grid_img' method='post'>";
+													echo "<button value='$pow[num_afish]' name='call' class='accept_form'>";
+														echo "<img src='$pow[photo]' width='210' height='300'>";
+														// echo "$row[name_afish]";
+													echo "</button>";
+												echo "</form>";
+											}
+										mysqli_free_result($result2);
+										}
+										// mysqli_close($link2);
 
-                                echo "</div>";
+									echo "</div>";
 
-                                echo "<div class='inf_museum'>";
-									echo "<div class='text_info_museum'>";
-										echo "<img src='./images/icons/location.png'width='30px' height='30px'>";
-										echo "<p style='vertical-align: middle'>$row[adress]</p>";
+									echo "<div class='inf_museum'>";
+										echo "<div class='text_info_museum'>";
+											echo "<img src='./images/icons/location.png'width='35px' height='35px'>";
+											echo "<p style='vertical-align: middle;font-size:20px'>$row[adress]</p>";
+										echo "</div>";
+											echo "<br>";
+										echo "<div class='text_info_museum'>";
+											echo "<img style='margin-top:15px;' src='./images/icons/telephone.png' width='25px' height='25px'>";              
+											echo "<p>$row[tel]</p>";
+										echo "</div>";
+											echo "<br>";
+										echo "<div class='text_info_museum'>";
+											echo "<img style='margin-top:12px;' src='./images/icons/email.png' width='25px' height='25px'>";
+											echo "<p>$row[e_mail]</p>";
+										echo "</div>";
+										if ($result3 = mysqli_query($link2, "SELECT Afisha.num_afish as num_afish, Afisha.photo as photo, max(Comments.rating) as rating,Afisha.name_afish as name_afish 
+										from Afisha left join Comments on Comments.num_afish = Afisha.num_afish where rating = (Select max(rating) from Afisha) and id_museum = '$id_museum'")) 
+										{
+											$kol =0;
+											while( $pow = mysqli_fetch_assoc($result3) )
+											{
+
+												echo "<form  action='exh_info.php'  method='post'>";
+													echo "<button value='$pow[num_afish]' name='call' class='accept_form'>";
+														echo "<img src='$pow[photo]' width='250' height='350'>";
+														// echo "$row[name_afish]";
+													echo "</button>";
+												echo "</form>";
+											}
+										mysqli_free_result($result3);
+										}
+										mysqli_close($link2);
+										
 									echo "</div>";
-										echo "<br>";
-									echo "<div class='text_info_museum'>";
-										echo "<img src='./images/icons/telephone.png' width='15px' height='15px'>";              
-										echo "<p>$row[tel]</p>";
-									echo "</div>";
-										echo "<br>";
-									echo "<div class='text_info_museum'>";
-										echo "<img src='./images/icons/email.png' width='15px' height='15px'>";
-										echo "<p>$row[e_mail]</p>";
-									echo "</div>";
-                                echo "</div>";
-                            echo "</div>";
+								echo "</div>";
+						echo "</div>";
 				}
 			mysqli_free_result($result);
 			}
 			mysqli_close($link);
 		?>
 	
-	</div>
+	
 </section>
 	<script src="js/jquery.min.js"></script>
   <script src="js/popper.js"></script>
