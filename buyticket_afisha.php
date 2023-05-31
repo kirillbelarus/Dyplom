@@ -15,7 +15,7 @@
 	</head>
 	<body>
 	<section class="ftco-section">
-  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 			<div class="container">
 				<a class="navbar-brand" href="main.php">YourMinsk <span>art/beauty</span></a>
 				
@@ -67,62 +67,137 @@
 					</div>
 				</li>
 			</div>
-		</nav>
+	</nav>
 
 
 	<div class="grid_ticket_afisha">
         <h1 class="name_ticket">Покупка билета афиши</h1>
         <form action="add_ticket_afisha.php"  class="form__container" method="POST"> 
             <?php
-            session_start();
             $link = mysqli_connect("localhost", "root", "", "course", 3306);
             if(isset($_POST['purchase'])){
                 $id = $_POST["purchase"];
+                setcookie('id_num_afish',$id, time() + 3600,"/");
             }
             else{
-                $id = 0;
+                // $id = 0;
             }
+            session_start();
             if(isset($_SESSION["num_afish"]))
             {
-                // echo "$_SESSION['num_afish']";
                 $num_afish = $_SESSION["num_afish"];
-                // echo "$num_afish";
             }
-                if($query = mysqli_query($link, "SELECT Afisha.num_afish as num_afish,Afisha.name_afish as name_afish,Afisha.data_start as data_start,
-                Afisha.data_end as data_end,Afisha.photo as photo,Afisha.cost_ticket as cost_ticket from Afisha where num_afish = '$id'"))
-                { 
-                    while( $row = mysqli_fetch_assoc($query) )
-                    {
-                        echo "<img src='$row[photo]' class='photo_ticket'>";
-                        echo "<div class='box'>";
-                            // echo "$row[num_afish]";
-                            echo "<p>Название мероприятия: $row[name_afish]</p>";
-                            echo "<p>Стоимость одного билета: $row[cost_ticket]р</p>";
-                            // echo "<p>Стоимость одного билета: $row[cost_ticket]*р</p>";
-                            echo "<input type='text' placeholder='кол-во билетов' id='kol_ticket' name='kol_ticket' class='form-control value='''> ";
-                            echo "<input type='text' placeholder='введите время' name='time_bron' class='form-control'>";
-                            if($result = mysqli_query($link, "SELECT Afisha.data_start as data_start, Afisha.data_end as data_end FROM Afisha where num_afish = '$num_afish'"))
-                            {
-                                while($object = mysqli_fetch_object($result))
+                if(isset($id))
+                {
+                    if($query = mysqli_query($link, "SELECT Afisha.num_afish as num_afish,Afisha.name_afish as name_afish,Afisha.data_start as data_start,
+                    Afisha.data_end as data_end,Afisha.photo as photo,Afisha.cost_ticket as cost_ticket from Afisha where num_afish = '$id'"))
+                    { 
+                        while( $row = mysqli_fetch_assoc($query) )
+                        {
+                            $_SESSION["new_num_afish"] = $row['num_afish'];
+                            echo "<img src='$row[photo]' class='photo_ticket'>";
+                            // if($result2 = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, Afisha.data_start as data_start, Afisha.data_end as data_end FROM Afisha inner join Catalog_Museum  where '$id'= Afisha.id_museum group by Afisha.id_museum"))
+                            // {
+                            //     while($object = mysqli_fetch_object($result2))
+                            //     {
+                            //         // echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
+                            //         echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data_event' class='form-control'>";
+                            //     }       
+                            // }
+                            echo "<div class='box'>";
+                                echo "<p>Название мероприятия: $row[name_afish]</p>";
+                                echo "<p>Стоимость одного билета: <span class='cost-ticket'>$row[cost_ticket]</span>р</p>";
+                                // echo "<p>Музей: <span class='cost-ticket'>$row[cost_ticket]</span>р</p>";
+                                // echo "<p>Стоимость одного билета: $row[cost_ticket]*р</p>";
+                                echo "<input type='number' placeholder='кол-во билетов' id='kol_ticket' name='kol_ticket' class='form-control' value=''> ";
+    
+                                echo "<input type='text' placeholder='введите время' name='time_bron' class='form-control'>";
+                                if($result = mysqli_query($link, "SELECT Afisha.data_start as data_start, Afisha.data_end as data_end FROM Afisha where num_afish = '$num_afish'"))
                                 {
-                                    // echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
-                                    echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data_event' class='form-control'>";
-                                }       
-                            }   
-                            echo "<select name='textbox' id='combobox' class='form-control'>";
-                            echo "    <option value=''>Нужен ли гид?</option>";
-                            echo "    <option value='yes'>Да</option>";
-                            echo "    <option value='net'>Нет</option>";
-                            echo "</select>";
-                            // echo "<h4 id='sum' style='text-align: center;'>Общая сумма заказа: ".$row['totalSum']."р.</h4>";
-                            echo "<input type='submit' class='btn btn-info'>";
-                        echo "</div>";
+                                    while($object = mysqli_fetch_object($result))
+                                    {
+                                        // echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
+                                        echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data_event' class='form-control'>";
+                                    }       
+                                }   
+                                echo "<select name='textbox' id='combobox' class='form-control'>";
+                                echo "    <option value=''>Нужен ли гид?</option>";
+                                echo "    <option value='yes'>Да</option>";
+                                echo "    <option value='net'>Нет</option>";
+                                echo "</select>";
+                                echo "<h4 id='sum' style='text-align: center;'>Общая сумма заказа: <span id='total-sum'></span>р.</h4>";
+                                echo "<input type='submit' class='btn btn-info'>";
+                            echo "</div>";
+                        }
+                        
+                        mysqli_free_result($query);
                     }
-                    
-                    mysqli_free_result($query);
                 }
+                else{
+                    if($query = mysqli_query($link, "SELECT Afisha.num_afish as num_afish,Afisha.name_afish as name_afish,Afisha.data_start as data_start,
+                    Afisha.data_end as data_end,Afisha.photo as photo,Afisha.cost_ticket as cost_ticket from Afisha where num_afish = '$_COOKIE[id_num_afish]'"))
+                    { 
+                        while( $row = mysqli_fetch_assoc($query) )
+                        {
+                            $_SESSION["new_num_afish"] = $row['num_afish'];
+                            echo "<img src='$row[photo]' class='photo_ticket'>";
+                            // if($result2 = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, Afisha.data_start as data_start, Afisha.data_end as data_end FROM Afisha inner join Catalog_Museum  where '$id'= Afisha.id_museum group by Afisha.id_museum"))
+                            // {
+                            //     while($object = mysqli_fetch_object($result2))
+                            //     {
+                            //         // echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
+                            //         echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data_event' class='form-control'>";
+                            //     }       
+                            // }
+                            echo "<div class='box'>";
+                                echo "<p>Название мероприятия: $row[name_afish]</p>";
+                                echo "<p>Стоимость одного билета: <span class='cost-ticket'>$row[cost_ticket]</span>р</p>";
+                                // echo "<p>Музей: <span class='cost-ticket'>$row[cost_ticket]</span>р</p>";
+                                // echo "<p>Стоимость одного билета: $row[cost_ticket]*р</p>";
+                                echo "<input type='number' placeholder='кол-во билетов' id='kol_ticket' name='kol_ticket' class='form-control' value=''> ";
+    
+                                echo "<input type='text' placeholder='введите время' name='time_bron' class='form-control'>";
+                                if($result = mysqli_query($link, "SELECT Afisha.data_start as data_start, Afisha.data_end as data_end FROM Afisha where num_afish = '$num_afish'"))
+                                {
+                                    while($object = mysqli_fetch_object($result))
+                                    {
+                                        // echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
+                                        echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data_event' class='form-control'>";
+                                    }       
+                                }   
+                                echo "<select name='textbox' id='combobox' class='form-control'>";
+                                echo "    <option value=''>Нужен ли гид?</option>";
+                                echo "    <option value='yes'>Да</option>";
+                                echo "    <option value='net'>Нет</option>";
+                                echo "</select>";
+                                echo "<h4 id='sum' style='text-align: center;'>Общая сумма заказа: <span id='total-sum'></span>р.</h4>";
+                                echo "<input type='submit' class='btn btn-info'>";
+                            echo "</div>";
+                        }
+                        
+                        mysqli_free_result($query);
+                    }
+                }
+               
             ?>
         </form>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                let totalSum = document.getElementById('total-sum')
+                let costTicket = document.querySelector('.cost-ticket')
+    
+                document.getElementById('kol_ticket').addEventListener('keyup', function (e) {
+                    let count = e.target.value;
+                    console.log(totalSum);
+                    if(count.length < 3) {
+                        totalSum.innerHTML = count * costTicket.innerHTML
+                    } else {
+                        this.value = this.value.slice(0, this.value.length - 1)
+                    }
+                })
+            })
+            </script>
 	</div>
     
 	</section>
@@ -138,6 +213,59 @@
                 })
             </script>
     <?php   } ?>
+
+<script>
+    $('.kol_ticket').blur(function() {
+                var kol_ticket = $(this).val();
+                var idTov = $(this).attr('id');
+                console.log(idTov);
+                console.log(kolvoTov);
+                    if(!/^[0-9]+$/.test(kolvoTov) || kolvoTov <= 0)
+                    {
+                        $(this).val(1);
+                        Swal.fire({
+                        title: 'Неправильный формат количества',
+                        showConfirmButton: true,
+                        confirmButtonColor: '#ff7878',
+                        });
+                        var kolvoTov = $(this).val();
+
+                        $.ajax({
+                        type: "POST",
+                        url: 'kolvo.php',
+                        data: {val:kolvoTov, id:idTov},
+                        success: function(data) {
+                            result = JSON.parse(data);
+                            $('#sum').html("Общая сумма заказа: " + result.sum + " руб.");
+
+                        },
+                        error: function(data) {
+                            alert("Что то пошло не так( kolvo");
+                        }
+                    });
+
+
+                    }
+                    else
+                    {
+                        $.ajax({
+                        type: "POST",
+                        url: 'kolvo.php',
+                        data: {val:kolvoTov, id:idTov},
+                        success: function(data) {
+                            result = JSON.parse(data);
+                            $('#sum').html("Общая сумма заказа: " + result.sum + " руб.");
+
+                        },
+                        
+                        error: function(data) {
+                            alert("Что то пошло не так(" + data.error);
+                        }
+                    });
+                    }
+                    
+             });
+</script>
 
 	<script src="js/jquery.min.js"></script>
   <script src="js/popper.js"></script>
