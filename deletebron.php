@@ -1,6 +1,6 @@
 <?php
 
-        $id = $_POST["id_user"];
+        $id = $_POST["id_bron"];
 
         $link = mysqli_connect("localhost", "root", "", "course", 3306);
 
@@ -10,7 +10,7 @@
             exit;
         }
         echo "Соединение с MySQL установлено!";
-        $query=mysqli_query($link, "DELETE FROM Bron WHERE id_user = $id"); 
+        $query=mysqli_query($link, "DELETE FROM Bron WHERE id_bron = $id"); 
 
         header("Location: Adminbron.php");
 

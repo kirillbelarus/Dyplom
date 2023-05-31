@@ -142,7 +142,7 @@
                       echo "<td>".$row['data_visit']."</td>";
                       echo "<td>".$row['kol_chel']."</td>";
                       echo "<td style='justify-content: center; display:flex;'>"
-                        ."<button type='submit' name='id_user' value='".$row['id_user']."'>Удалить</button>"
+                        ."<button type='submit' name='id_bron' value='".$row['id_bron']."'>Удалить</button>"
                         ."</td>";
                       echo "</form>";
                       echo "</tr>";
