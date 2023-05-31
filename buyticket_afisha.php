@@ -96,19 +96,9 @@
                         {
                             $_SESSION["new_num_afish"] = $row['num_afish'];
                             echo "<img src='$row[photo]' class='photo_ticket'>";
-                            // if($result2 = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, Afisha.data_start as data_start, Afisha.data_end as data_end FROM Afisha inner join Catalog_Museum  where '$id'= Afisha.id_museum group by Afisha.id_museum"))
-                            // {
-                            //     while($object = mysqli_fetch_object($result2))
-                            //     {
-                            //         // echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
-                            //         echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data_event' class='form-control'>";
-                            //     }       
-                            // }
                             echo "<div class='box'>";
                                 echo "<p>Название мероприятия: $row[name_afish]</p>";
                                 echo "<p>Стоимость одного билета: <span class='cost-ticket'>$row[cost_ticket]</span>р</p>";
-                                // echo "<p>Музей: <span class='cost-ticket'>$row[cost_ticket]</span>р</p>";
-                                // echo "<p>Стоимость одного билета: $row[cost_ticket]*р</p>";
                                 echo "<input type='number' placeholder='кол-во билетов' id='kol_ticket' name='kol_ticket' class='form-control' value=''> ";
     
                                 echo "<input type='text' placeholder='введите время' name='time_bron' class='form-control'>";
@@ -116,7 +106,6 @@
                                 {
                                     while($object = mysqli_fetch_object($result))
                                     {
-                                        // echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
                                         echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data_event' class='form-control'>";
                                     }       
                                 }   
@@ -141,19 +130,9 @@
                         {
                             $_SESSION["new_num_afish"] = $row['num_afish'];
                             echo "<img src='$row[photo]' class='photo_ticket'>";
-                            // if($result2 = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, Afisha.data_start as data_start, Afisha.data_end as data_end FROM Afisha inner join Catalog_Museum  where '$id'= Afisha.id_museum group by Afisha.id_museum"))
-                            // {
-                            //     while($object = mysqli_fetch_object($result2))
-                            //     {
-                            //         // echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
-                            //         echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data_event' class='form-control'>";
-                            //     }       
-                            // }
                             echo "<div class='box'>";
                                 echo "<p>Название мероприятия: $row[name_afish]</p>";
                                 echo "<p>Стоимость одного билета: <span class='cost-ticket'>$row[cost_ticket]</span>р</p>";
-                                // echo "<p>Музей: <span class='cost-ticket'>$row[cost_ticket]</span>р</p>";
-                                // echo "<p>Стоимость одного билета: $row[cost_ticket]*р</p>";
                                 echo "<input type='number' placeholder='кол-во билетов' id='kol_ticket' name='kol_ticket' class='form-control' value=''> ";
     
                                 echo "<input type='text' placeholder='введите время' name='time_bron' class='form-control'>";
@@ -197,7 +176,7 @@
                     }
                 })
             })
-            </script>
+        </script>
 	</div>
     
 	</section>
