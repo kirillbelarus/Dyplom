@@ -39,13 +39,6 @@
 						<button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
 					</div>
 				</form>
-
-		<!-- <h1>Поиск:</h1>
-			<form action="" method="POST">
-
-				<button type="submit">Поиск</button>
-			</form> -->
-
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="fa fa-bars"></span> Меню
 				</button>
@@ -57,6 +50,7 @@
 						<li class="nav-item"><a href="./exposition.php" class="nav-link">Выставки</a></li>
 						<li class="nav-item"><a href="lecture.php" class="nav-link">Лекции</a></li>
 						<?php 
+            if(isset($_COOKIE['org']))
 							if($_COOKIE["org"] == 1):
 							echo "<li class='nav-item '>";
 							echo "<a href='add_afisha.php' class='nav-link'>Добавить афишу</a>";
@@ -86,14 +80,9 @@
                 <input type="text" placeholder="введите почту" class="form-control" name="email">
                 <input type="text" placeholder="введите время работы" class="form-control" name="time_work">
                 
-                <div class="upload-file-container">
-                  <img id="image" src="#" alt="" />						
-                  <div class="upload-file-container-text">
-                    <span>Добавить фото</span>
-                    <input type="file" name="myfile[]" multiple id="myfile">
-                    <!-- <input type="file"  class="photo form-control" name="myfile[]" multiple id="myfile" accept="image/*"/> -->
-                  </div>
-                </div>	               
+                <img id="image" src="#" alt="" />						
+                <input type="file" name="pic" id="pic" size="25" />
+                
                 <input type="submit" class="btn btn-secondary">
       </form>
     </div>

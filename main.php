@@ -103,8 +103,6 @@
 				{
 					while($object = mysqli_fetch_object($result2))
 					{
-
-						// echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
 						echo "<input type='date' name='calendar' min='$object->data_start' max='$object->data_end' name='data_event' class='select_sort'>";
 						// echo "<input type='date' min=$row['data_start'] max=$row'data_end'] name='data_event' class='form-control'>";
 					}       
@@ -120,9 +118,6 @@
 					</label>
 				</div>
 			<button type='submit' class='btn btn-secondary'>Применить</button>
-            <!-- <input placeholder='input min cost..' name='min' value='' class='form-control'/>
-            <input placeholder='input max cost..' name='max' value='' class='form-control'/>    -->
-            <!-- <button type="submit" class="btn btn-secondary">Ввод данных</button> -->
         </form>
 	<div class="grid_afisha">
 			<?php
@@ -168,16 +163,16 @@
 			{
 				while( $row = mysqli_fetch_assoc($result) )
 				{
-					if($row['avg_rating'] == null)
-                    {
-                        $row['avg_rating'] = 0;
-                    }
+					
 					echo "<form action='exh_info.php' class='grid_img' method='post'>";
 						echo "<button value='$row[num_afish]' name='call' class='accept_form'>";
 							echo "<img src='$row[photo]' width='210' height='300'>";
-							// echo "$row[name_afish]";
-							// echo "$row[avg_rating]";
-							echo "<div class='text_rating'>$row[avg_rating]★</div>";
+							if($row['avg_rating'] != null)
+							{
+								$avg = round($row['avg_rating'],3);
+								echo "<div class='text_rating'>$avg</div>";
+							}
+							
 						echo "</button>";
 						// echo "<p style='position:absolute; display:flex; margin-top:335px;'>cost:$row[cost_ticket]</p>";
 					echo "</form>";

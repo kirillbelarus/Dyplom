@@ -22,7 +22,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<body>
 	<section class="ftco-section">
-  <nav class="navbar navbar-expand-lg navbar-dark ftco_nаavbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_nаavbar bg-dark ftco-navbar-light" id="ftco-navbar">
 			<div class="container">
 				<a class="navbar-brand" href="main.php">YourMinsk <span>art/beauty</span></a>
 				
@@ -35,17 +35,9 @@
 								$value ="";
 								echo "<input type='text' name = 'search' value='$value' class='form-control pl-3' placeholder='Search'>";
 						?>
-						<!-- <input type="text" class="form-control pl-3" placeholder="Search"> -->
 						<button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
 					</div>
 				</form>
-
-		<!-- <h1>Поиск:</h1>
-			<form action="" method="POST">
-
-				<button type="submit">Поиск</button>
-			</form> -->
-
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="fa fa-bars"></span> Меню
 				</button>
@@ -57,6 +49,7 @@
 						<li class="nav-item"><a href="./exposition.php" class="nav-link">Выставки</a></li>
 						<li class="nav-item"><a href="lecture.php" class="nav-link">Лекции</a></li>
 						<?php 
+            if(isset($_COOKIE['org']))
 							if($_COOKIE["org"] == 1):
 							echo "<li class='nav-item active'>";
 							echo "<a href='add_afisha.php' class='nav-link active'>Добавить афишу</a>";
@@ -87,27 +80,25 @@
       <form class="adding__afisha" enctype="multipart/form-data" action="./add2_afisha.php" method="post">
         <?php 
           $link = mysqli_connect("localhost", "root", "", "course",3306);
-                
-                    if($result = mysqli_query($link, "SELECT id_museum, name_museum FROM Catalog_Museum"))
-                        {
-                            echo '<div class="box">';
-                            echo '<select class="form-control" name="ID">'; 
-                            echo '<option value="">Выберите музей</option>';
-                            while($object = mysqli_fetch_object($result))
-                            {
-                                echo "<option value='$object->id_museum'>$object->name_museum</option>"; 
-                            }
-                            echo '</select>';
-                            echo '</div>';
-                            mysqli_free_result($result);
-                        }
+            if($result = mysqli_query($link, "SELECT id_museum, name_museum FROM Catalog_Museum"))
+            {
+              echo '<div class="box">';
+              echo '<select class="form-control" name="ID">'; 
+              echo '<option value="">Выберите музей</option>';
+                while($object = mysqli_fetch_object($result))
+                {
+                  echo "<option value='$object->id_museum'>$object->name_museum</option>"; 
+                }
+              echo '</select>';
+              echo '</div>';
+              mysqli_free_result($result);
+            }
         ?>
         
         <?php 
               if(isset($_POST['data_start2']))
               {
                 $min_value = $_POST['data_start2'];
-                // echo "<input type='text' placeholder='Ваша первая дата' id ='first_data' value='$min_value' class='form-control' name='data_start'>";
                 echo "<input type='date' name='data_end' min='$min_value' class='form-control adding__date-end'>";
               }
               else
@@ -116,10 +107,6 @@
               }
                 ?>
                 <input type="text" placeholder="название афиши" class="form-control" name="name_afish">
-                <!-- <label name='data_start' value='$min_value'></label> -->
-                <!-- <input type="date" placeholder="дата начало" name="data_start"> -->
-                <!-- <input type="date" placeholder="дата окончания" name="data_end"> -->
-                
                 <input type="text" placeholder="введите цену" class="form-control" name="cost_ticket">
     
                 <div class="upload-file-container">
@@ -127,7 +114,6 @@
                   <div class="upload-file-container-text">
                     <span>Добавить фото</span>
                       <input type="file" name="pic" id="pic" size="25" />
-                    <!-- <input type="file"  class="photo form-control" name="download_image" id="imgInput"  accept="image/*"/> -->
                   </div>
                 </div>	
                 <select name="combo_type" class="form-control" id="combo_type">
@@ -137,10 +123,14 @@
                 </select>
                 <select name="combo_genre" class="form-control" id="combo_genre">
                     <option value="">выберите жанр афиши:</option>
-                    <option value="художественный">художественный</option>
-                    <option value="мода и стиль">мода и стиль</option>
+                    <option value="художественная">художественная</option>
+                    <option value="историческая">историческая</option>
+                    <option value="фотография">фотография</option>
                     <option value="книжная">книжная</option>
-                    <option value="children">children</option>
+                    <option value="тематическая">тематическая</option>
+                    <option value="этнографическая">этнографическая</option>
+                    <option value="персональная">персональная</option>
+                    <option value="детям">детям</option>
                 </select>
                 
                 <input type="submit"  value="Upload" class="btn btn-secondary">
