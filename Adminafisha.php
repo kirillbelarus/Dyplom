@@ -50,7 +50,7 @@
     </style>
 	<body>
 	<section class="ftco-section">
-  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 			<div class="container">
 				<a class="navbar-brand" href="main.php">YourMinsk <span>art/beauty</span></a>
 				
@@ -78,6 +78,7 @@
 						<li class="nav-item"><a href="./exposition.php" class="nav-link">Выставки</a></li>
 						<li class="nav-item"><a href="lecture.php" class="nav-link">Лекции</a></li>
 						<?php 
+                        if(isset($_COOKIE['org']))
 							if($_COOKIE["org"] == 1):
 							echo "<li class='nav-item '>";
 							echo "<a href='add_afisha.php' class='nav-link active'>Добавить афишу</a>";
@@ -87,25 +88,12 @@
 							echo "</li>";
 							endif;
 						?>	
-								<?php 
-									// if($_COOKIE["org"] == 1 || $_COOKIE['user'] ==1):
-									// 	echo "<a class='dropdown-item' href='registr.php'>Зарегистрироваться</a>";
-									// 	echo "<a class='dropdown-item' href='sign.php'>Войти</a>";
-									// endif;
-									?>	
 					</ul>
 				</div>
 				<li class="nav-item dropdown profile__btn">
 					<a class="nav-link" href="personal.php" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 					<div class="dropdown-menu" aria-labelledby="dropdown04">
 						<a class="dropdown-item" href="personal.php">Зайти в кабинет</a>
-						<?php 
-							if($_COOKIE["org"] == 1 || $_COOKIE['user'] ==1):
-								echo "<a class='dropdown-item' href='registr.php'>Зарегистрироваться</a>";
-								echo "<a class='dropdown-item' href='sign.php'>Войти</a>";
-							endif;
-							?>	
-						
 						<a class="dropdown-item" href="exit.php">Выйти</a>
 					</div>
 				</li>
@@ -115,15 +103,15 @@
       <!-- <h1 style="margin-left:40%">Поиск:</h1> -->
         <form action="" method="POST" style="margin-left:40%; margin-top:100px;">
             <?php
-                if(isset($_POST['num_afish']))
+                if(isset($_POST['name_afish']))
                 {
-                  $value = $_POST['num_afish'];
+                  $value = $_POST['name_afish'];
                 }
                     
                 else{
                   $value = "";
                 }
-                echo "<input placeholder='input num_afish..' name='num_afish' value='$value'/>";  
+                echo "<input placeholder='введите название афиши..' name='name_afish' value='$value'/>";  
             ?>
             
             <button type="submit">Поиск</button>
@@ -131,16 +119,16 @@
 
     <table border="1" style="width:75%; margin-right:auto; margin-left:auto; margin-top:100px;" class="styled-table">
         <tr>
-            <th>id museum</th>
-            <th>id_org</th>
-            <th>name_afish</th> 
-            <th>data_end</th>
-            <th>cost ticket</th> 
+            <th>Название музея</th>
+            <th>Организатор</th>
+            <th>Название афиши</th> 
+            <th>Дата окончания</th>
+            <th>Стоимость билета</th> 
         </tr>
         <?php
              $link = mysqli_connect("localhost", "root", "", "course", 3306);
-                if(isset($_POST['num_afish']))
-                    $sql = "SELECT * FROM Afisha inner join Catalog_Museum on Catalog_Museum.id_museum = Afisha.id_museum inner join Organiz on Organiz.id_org = Afisha.id_org where num_afish > '$_POST[num_afish]'";
+                if(isset($_POST['name_afish']))
+                    $sql = "SELECT * FROM Afisha inner join Catalog_Museum on Catalog_Museum.id_museum = Afisha.id_museum inner join Organiz on Organiz.id_org = Afisha.id_org where name_afish = '$_POST[name_afish]'";
                 else
                     $sql = 'SELECT * FROM Afisha inner join Catalog_Museum on Catalog_Museum.id_museum = Afisha.id_museum inner join Organiz on Organiz.id_org = Afisha.id_org';
                 if ($result = mysqli_query($link, $sql))
@@ -149,7 +137,7 @@
                   {
                       echo "<tr>";
                       echo "<form action='deleteafisha.php' method='POST'>";
-                      echo "<td>".$row['id_museum']."</td>";
+                      echo "<td>".$row['name_museum']."</td>";
                       echo "<td>".$row['e_mail']."</td>";
                     //   echo "<td>".$row['name_afish']."</td>";
                       echo "<td>".$row['name_afish']."</td>";

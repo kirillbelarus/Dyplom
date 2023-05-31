@@ -50,7 +50,7 @@
     </style>
 	<body>
 	<section class="ftco-section">
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
                 <div class="container">
                     <a class="navbar-brand" href="main.php">YourMinsk <span>art/beauty</span></a>
 
@@ -65,6 +65,7 @@
                             <li class="nav-item"><a href="./exposition.php" class="nav-link">Выставки</a></li>
                             <li class="nav-item"><a href="lecture.php" class="nav-link">Лекции</a></li>
                             <?php 
+                            if(isset($_COOKIE['org']))
                                 if($_COOKIE["org"] == 1):
                                 echo "<li class='nav-item '>";
                                 echo "<a href='add_afisha.php' class='nav-link'>Добавить афишу</a>";
@@ -74,31 +75,32 @@
                                 echo "</li>";
                                 endif;
                             ?>	
-                                    <?php 
-                                        // if($_COOKIE["org"] == 1 || $_COOKIE['user'] ==1):
-                                        //     echo "<a class='dropdown-item' href='registr.php'>Зарегистрироваться</a>";
-                                        //     echo "<a class='dropdown-item' href='sign.php'>Войти</a>";
-                                        // endif;
-                                        ?>	
                         </ul>
                     </div>
                     <li class="nav-item dropdown profile__btn">
                         <a class="nav-link" href="personal.php" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" href="personal.php">Зайти в кабинет</a>
-                            <?php 
-                                // if($_COOKIE["org"] == 1 || $_COOKIE['user'] ==1):
-                                //     echo "<a class='dropdown-item' href='registr.php'>Зарегистрироваться</a>";
-                                //     echo "<a class='dropdown-item' href='sign.php'>Войти</a>";
-                                // endif;
-                                ?>	
-                            
                             <a class="dropdown-item" href="exit.php">Выйти</a>
                         </div>
                     </li>
                 </div>
-    </nav>
-
+        </nav>
+        <form action="" method="POST" style="margin-left:40%; margin-top:100px;">
+            <?php
+                if(isset($_POST['name_afish']))
+                {
+                  $value = $_POST['name_afish'];
+                }
+                    
+                else{
+                  $value = "";
+                }
+                echo "<input placeholder='введите название музея..' name='name_afish' value='$value'/>";  
+            ?>
+            
+            <button type="submit">Поиск</button>
+        </form>
     <table border="1" style="width:75%; margin-right:auto; margin-left:auto; margin-top:100px;" class="styled-table">
         <tr style='text-align: center;'>
             <th>Название музея</th>
@@ -113,10 +115,20 @@
         </tr>
         <?php
              $link = mysqli_connect("localhost", "root", "", "course", 3306);
-                if ($result = mysqli_query($link, 'SELECT Catalog_Museum.id_museum as id_museum,Catalog_Museum.name_museum as name_museum, count(Afisha.num_afish) as count_afish,Organiz.fio_org as fio, 
-                Catalog_Museum.adress as adress,Catalog_Museum.tel as tel,Catalog_Museum.e_mail as e_mail,Catalog_Museum.time_work as time_work 
-                from Catalog_Museum inner join Organiz on Catalog_Museum.id_org = Organiz.id_org left join Afisha on  Catalog_Museum.id_museum = Afisha.id_museum
-                group by id_museum'))
+                if(isset($_POST['name_afish']))
+                {
+                    $sql = "SELECT Catalog_Museum.id_museum as id_museum,Catalog_Museum.name_museum as name_museum, count(Afisha.num_afish) as count_afish,Organiz.fio_org as fio, 
+                    Catalog_Museum.adress as adress,Catalog_Museum.tel as tel,Catalog_Museum.e_mail as e_mail,Catalog_Museum.time_work as time_work 
+                    from Catalog_Museum inner join Organiz on Catalog_Museum.id_org = Organiz.id_org left join Afisha on  Catalog_Museum.id_museum = Afisha.id_museum
+                    where name_museum = '$_POST[name_afish]'
+                    group by id_museum";
+                }
+                else
+                    $sql = "SELECT Catalog_Museum.id_museum as id_museum,Catalog_Museum.name_museum as name_museum, count(Afisha.num_afish) as count_afish,Organiz.fio_org as fio, 
+                    Catalog_Museum.adress as adress,Catalog_Museum.tel as tel,Catalog_Museum.e_mail as e_mail,Catalog_Museum.time_work as time_work 
+                    from Catalog_Museum inner join Organiz on Catalog_Museum.id_org = Organiz.id_org left join Afisha on  Catalog_Museum.id_museum = Afisha.id_museum
+                    group by id_museum";
+                if ($result = mysqli_query($link, $sql))
                 {
                   while( $row = mysqli_fetch_assoc($result) )
                   {

@@ -50,23 +50,9 @@
     </style>
 	<body>
 	<section class="ftco-section">
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
                 <div class="container">
                     <a class="navbar-brand" href="main.php">YourMinsk <span>art/beauty</span></a>
-                    
-                    <!-- <form action="#" class="searchform order-sm-start order-lg-last" method="POST">
-                        <div class="form-group d-flex">
-                            <?php 
-                            //     if(isset($_POST['search']))
-                            //         $value = $_POST['search'];
-                            //     else
-                            //         $value ="";
-                            //         echo "<input type='text' name = 'search' value='$value' class='form-control pl-3' placeholder='Search'>";
-                            // ?>
-                            <button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
-                        </div>
-                    </form> -->
-
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="fa fa-bars"></span> Меню
                     </button>
@@ -87,31 +73,32 @@
                                 echo "</li>";
                                 endif;
                             ?>	
-                                    <?php 
-                                        // if($_COOKIE["org"] == 1 || $_COOKIE['user'] ==1):
-                                        //     echo "<a class='dropdown-item' href='registr.php'>Зарегистрироваться</a>";
-                                        //     echo "<a class='dropdown-item' href='sign.php'>Войти</a>";
-                                        // endif;
-                                        ?>	
                         </ul>
                     </div>
                     <li class="nav-item dropdown profile__btn">
                         <a class="nav-link" href="personal.php" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" href="personal.php">Зайти в кабинет</a>
-                            <?php 
-                                // if($_COOKIE["org"] == 1 || $_COOKIE['user'] ==1):
-                                //     echo "<a class='dropdown-item' href='registr.php'>Зарегистрироваться</a>";
-                                //     echo "<a class='dropdown-item' href='sign.php'>Войти</a>";
-                                // endif;
-                                ?>	
-                            
                             <a class="dropdown-item" href="exit.php">Выйти</a>
                         </div>
                     </li>
                 </div>
-    </nav>
-
+        </nav>
+        <form action="" method="POST" style="margin-left:40%; margin-top:100px;">
+            <?php
+                if(isset($_POST['name_afish']))
+                {
+                  $value = $_POST['name_afish'];
+                }
+                    
+                else{
+                  $value = "";
+                }
+                echo "<input placeholder='введите почту..' name='name_afish' value='$value'/>";  
+            ?>
+            
+            <button type="submit">Поиск</button>
+        </form>
     <table border="1" style="width:75%; margin-right:auto; margin-left:auto; margin-top:100px;" class="styled-table">
         <tr style='text-align: center;'>
             <th>Логин пользователя</th>
@@ -122,9 +109,19 @@
         </tr>
         <?php
              $link = mysqli_connect("localhost", "root", "", "course", 3306);
-                if ($result = mysqli_query($link, 'SELECT Users.id_user as id_user, Users.login_user as login_user,
-                Users.e_mail as e_mail,count(Comments.id_comment) as count_comment, avg(Comments.rating) as avg_rating
-                from Comments right join Users on Comments.id_user = Users.id_user group by id_user'))
+                if(isset($_POST['name_afish']))
+                {
+                    $sql="SELECT Users.id_user as id_user, Users.login_user as login_user,
+                    Users.e_mail as e_mail,count(Comments.id_comment) as count_comment, avg(Comments.rating) as avg_rating
+                    from Comments right join Users on Comments.id_user = Users.id_user 
+                    where e_mail = '$_POST[name_afish]'
+                    group by id_user";
+                }
+                else
+                    $sql="SELECT Users.id_user as id_user, Users.login_user as login_user,
+                    Users.e_mail as e_mail,count(Comments.id_comment) as count_comment, avg(Comments.rating) as avg_rating
+                    from Comments right join Users on Comments.id_user = Users.id_user group by id_user";
+                if ($result = mysqli_query($link,$sql))
                 {
                   while( $row = mysqli_fetch_assoc($result) )
                   {

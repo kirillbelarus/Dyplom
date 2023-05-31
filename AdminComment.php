@@ -50,7 +50,7 @@
     </style>
 	<body>
 	<section class="ftco-section">
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
                 <div class="container">
                     <a class="navbar-brand" href="main.php">YourMinsk <span>art/beauty</span></a>
                     
@@ -110,7 +110,23 @@
                         </div>
                     </li>
                 </div>
-    </nav>
+        </nav>
+
+        <form action="" method="POST" style="margin-left:40%; margin-top:100px;">
+            <?php
+                if(isset($_POST['name_afish']))
+                {
+                  $value = $_POST['name_afish'];
+                }
+                    
+                else{
+                  $value = "";
+                }
+                echo "<input placeholder='введите название афиши..' name='name_afish' value='$value'/>";  
+            ?>
+            
+            <button type="submit">Поиск</button>
+        </form>
 
     <table border="1" style="width:75%; margin-right:auto; margin-left:auto; margin-top:100px;" class="styled-table">
         <tr style='text-align: center;'>
@@ -122,7 +138,13 @@
         </tr>
         <?php
              $link = mysqli_connect("localhost", "root", "", "course", 3306);
-                if ($result = mysqli_query($link, 'SELECT Comments.id_comment as id_comment, Afisha.name_afish as name_afish,Users.login_user as login_user, Comments.comment_text as comment_text,Comments.rating as rating from Comments inner join Users on Comments.id_user = Users.id_user inner join Afisha on Afisha.num_afish = Comments.num_afish'))
+                if(isset($_POST['name_afish']))
+                {
+                    $sql = "SELECT Comments.id_comment as id_comment, Afisha.name_afish as name_afish,Users.login_user as login_user, Comments.comment_text as comment_text,Comments.rating as rating from Comments inner join Users on Comments.id_user = Users.id_user inner join Afisha on Afisha.num_afish = Comments.num_afish where  name_afish = '$_POST[name_afish]' or login_user = '$_POST[name_afish]'";
+                }
+                else
+                    $sql = "SELECT Comments.id_comment as id_comment, Afisha.name_afish as name_afish,Users.login_user as login_user, Comments.comment_text as comment_text,Comments.rating as rating from Comments inner join Users on Comments.id_user = Users.id_user inner join Afisha on Afisha.num_afish = Comments.num_afish ";
+                if ($result = mysqli_query($link, $sql))
                 {
                   while( $row = mysqli_fetch_assoc($result) )
                   {

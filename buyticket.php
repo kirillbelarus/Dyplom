@@ -72,7 +72,7 @@
     <!-- <p class='name_afisha'>xren</p> -->
     <form action="add_buy.php"  class="form__container" method="POST">
       <form action="./add_buy.php" id="orderForm" method="post"> 
-        <img src='' class="photo_ticket">
+        <!-- <img src='./images/back_museum.png' class="photo_ticket"> -->
           <?php
 
           session_start();
@@ -91,6 +91,7 @@
           }
           if(isset($id))
           {
+            echo "<img src='./images/back_museum.png' class='photo_ticket'>";
             if($query = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.cost_ticket as cost_ticket, Afisha.photo as photo, Afisha.id_museum as id_museum 
             FROM Afisha inner join Catalog_Museum  where '$id'= Afisha.id_museum group by Afisha.num_afish"))
             { 
@@ -113,7 +114,7 @@
                 //   mysqli_free_result($query);
                 
                     echo '<div class="box">';
-                        echo "<p class='name_afisha'>Название мероприятия:$pow[name_afish]</p>";
+                        echo "<p>Название мероприятия:<span class='name_afisha'>$pow[name_afish]</span></p>";
                         echo "<p>Стоимость одного билета: <span class='cost-ticket'>$pow[cost_ticket]</span>р</p>";
                             echo '<select class="combobox_select form-control" name="ch">'; 
                                 echo '<option value="">Выберите мероприятия</option>';

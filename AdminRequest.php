@@ -50,7 +50,7 @@
     </style>
 	<body>
 	<section class="ftco-section">
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
                 <div class="container">
                     <a class="navbar-brand" href="main.php">YourMinsk <span>art/beauty</span></a>
 
@@ -65,6 +65,7 @@
                             <li class="nav-item"><a href="./exposition.php" class="nav-link">Выставки</a></li>
                             <li class="nav-item"><a href="lecture.php" class="nav-link">Лекции</a></li>
                             <?php 
+                            if(isset($_COOKIE['org']))
                                 if($_COOKIE["org"] == 1):
                                 echo "<li class='nav-item '>";
                                 echo "<a href='add_afisha.php' class='nav-link'>Добавить афишу</a>";
@@ -84,8 +85,22 @@
                         </div>
                     </li>
                 </div>
-    </nav>
-
+        </nav>
+        <form action="" method="POST" style="margin-left:40%; margin-top:100px;">
+            <?php
+                if(isset($_POST['name_afish']))
+                {
+                  $value = $_POST['name_afish'];
+                }
+                    
+                else{
+                  $value = "";
+                }
+                echo "<input placeholder='введите логин пользователя..' name='name_afish' value='$value'/>";  
+            ?>
+            
+            <button type="submit">Поиск</button>
+        </form>
     <table border="1" style="width:75%; margin-right:auto; margin-left:auto; margin-top:100px;" class="styled-table">
         <tr style='text-align: center;'>
             <th>Почта пользователя</th>
@@ -100,7 +115,13 @@
         </tr>
         <?php
              $link = mysqli_connect("localhost", "root", "", "course", 3306);
-                if ($result = mysqli_query($link, 'SELECT id_request,id_user,e_mail,login_user,name_museum,adress,tel,time_work,date_submission from Request'))
+                if(isset($_POST['name_afish']))
+                {
+                    $sql="SELECT id_request,id_user,e_mail,login_user,name_museum,adress,tel,time_work,date_submission from Request where login_user='$_POST[name_afish]'";
+                }
+                else
+                    $sql="SELECT id_request,id_user,e_mail,login_user,name_museum,adress,tel,time_work,date_submission from Request";
+                if ($result = mysqli_query($link, $sql))
                 {
                   while( $row = mysqli_fetch_assoc($result) )
                   {

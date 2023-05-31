@@ -188,16 +188,30 @@
 					}
 					
 				}
+				if(isset($_COOKIE["org"]))
+				{
+					if($_COOKIE['org']==1){
+						if(isset($_COOKIE['org']))
+						{
+							$org_id = $_COOKIE['org_id'];
+							$link = mysqli_connect("localhost", "root", "", "course", 3306);
+							if($result = mysqli_query($link, "SELECT Organiz.id_org as id_org,Organiz.e_mail as e_mail, Organiz.fio_org as fio_org, Organiz.password_org as password_org from Organiz where id_org = $org_id"))
+							{
+								while($row = mysqli_fetch_assoc($result))
+								{
+										 echo "<div class='input_profile'><label class='labels'>ФИО(логин)</label><input type='text' class='form-control' placeholder='$row[fio_org]' value='' name='login'></div>";
+										echo "<div class='input_profile'><label class='labels'>E_mail</label><input type='text' class='form-control' value='' placeholder='$row[e_mail]' pattern='^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$' name='e_mail'></div>";
+										echo "<div class='input_profile'><label class='labels'>password</label><input type='text' class='form-control' placeholder='$row[password_org]' value='' name='pass'></div>";
+								}       
+								mysqli_free_result($result);
+							}
+							mysqli_close($link);
+						}
+					}
+					
+				}
 				?>
 								</div>
-							
-									<!-- <div class="input_profile"><label class="labels">ФИО(логин)</label><input type="text" class="form-control" placeholder="login" value="" name="login"></div>
-									<div class="input_profile"><label class="labels" >E_mail</label><input type="text" class="form-control" value="" placeholder="e_mail" pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" name="e_mail"></div>
-									<div class="input_profile"><label class="labels">password</label><input type="text" class="form-control" placeholder="password" value="" name="pass"></div> -->
-								
-								<!-- <div class="row mt-3"> -->
-								<!-- </div> -->
-								
 								<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
 							</form>
 							
