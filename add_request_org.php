@@ -19,27 +19,12 @@ if (!$link) {
 }
 echo "Соединение с MySQL установлено!";
 
-echo "<br>";
-echo "$id_user";
-echo "<br>";
-echo "$user_email";
-echo "<br>";
-echo "$login_user";
-echo "<br>";
-echo "$name_museum";
-echo "<br>";
-echo "$adress";
-echo "<br>";
-echo "xuina $tel";
-echo "<br>";
-echo "nexuina $time_work";
-
 $query=mysqli_query($link, "INSERT INTO Request (id_user,e_mail,login_user,name_museum,adress,tel,password_user,time_work,date_submission) 
 VALUES ($id_user,'$user_email','$login_user','$name_museum','$adress',$tel,'$password_user','$time_work','$date_submission')"); 
 
 echo "$query";
 if ( $query==true) {
-    // header("Location: request_org_user.php?success=1");
+    header("Location: request_org_user.php?success=1");
 }
 else {echo "Данные введены неверно!";}
 
