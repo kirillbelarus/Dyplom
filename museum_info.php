@@ -19,7 +19,7 @@
 	</head>
 	<body>
 	<section class="ftco-section">
-	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 			<div class="container">
 				<a class="navbar-brand" href="main.php">YourMinsk <span>art/beauty</span></a>
 				
@@ -76,10 +76,18 @@
 			</div>
 		</nav>
 
-
-	
 		<?php 
-            $id_museum = filter_var(trim($_POST['id_museum']),FILTER_SANITIZE_STRING);
+			session_start();
+			if(isset($_POST['id_museum']))
+			{
+				$id_museum = $_POST['id_museum'];
+			}
+			else
+			{
+				$id_museum = $_SESSION['id_museum'];
+			}
+            // $id_museum = filter_var(trim($_POST['id_museum']),FILTER_SANITIZE_STRING);
+			
             // session_start();
 			$link = mysqli_connect("localhost", "root", "", "course",3306);
 			// $id_museum = $_SESSION["id_museum"];

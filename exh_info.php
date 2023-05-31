@@ -79,7 +79,7 @@
             }
 			$link = mysqli_connect("localhost", "root", "", "course",3306);
 			
-			if ($result = mysqli_query($link, "SELECT Afisha.num_afish as num_afish,Afisha.photo as photo, Afisha.name_afish as name_afish, Afisha.type_event as type_event, Afisha.data_start as data_start, Afisha.data_end as data_end, Catalog_Museum.name_museum as name_museum  from Afisha inner join Catalog_Museum on Afisha.id_museum=Catalog_Museum.id_museum where '$id' = num_afish")) 
+			if ($result = mysqli_query($link, "SELECT Afisha.num_afish as num_afish,Afisha.photo as photo,Afisha.id_museum as id_museum, Afisha.name_afish as name_afish, Afisha.type_event as type_event, Afisha.data_start as data_start, Afisha.data_end as data_end, Catalog_Museum.name_museum as name_museum  from Afisha inner join Catalog_Museum on Afisha.id_museum=Catalog_Museum.id_museum where '$id' = num_afish")) 
 			{
 				while( $row = mysqli_fetch_assoc($result) )
 				{
@@ -92,7 +92,11 @@
 								echo "<p>Тип мероприятия: <b>$row[type_event]</b></p>";
 								echo "<p>Дата начала мероприятия: <b>$row[data_start]</b></p>";
 								echo "<p>Дата окончания мероприятия: <b>$row[data_end]</b></p>";
-								echo "<p>Название музея: <b>$row[name_museum]</b></p>";
+								// $_SESSION['id_museum_exh'] = $row['id_museum'];
+								echo "<form action='museum_info.php' method='POST'>";
+									$_SESSION['id_museum'] = "$row[id_museum]";
+									echo "<p>Название музея: <a href='museum_info.php' class='link_museum' value='$row[id_museum]' name='id_museum'><b>$row[name_museum]</b></a></p>";
+								echo "</form>";
 								if(isset($_COOKIE['user']))
 								{
 									if($_COOKIE["user"]==1)
