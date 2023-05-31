@@ -10,19 +10,15 @@
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/style.css">
-
+	<link rel="stylesheet" href="page.css">
 
 	</head>
 	<body>
 	<?php 
 		if(isset($_COOKIE["id_afish_cookie"]))
 		{
-			// echo "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-			// echo "$id";
-			// setcookie("id_afish_cookie",$id, time()- 3600, "/");
 			unset($_COOKIE['id_afish_cookie']);
 			setcookie('id_afish_cookie', null, -1, '/');
-			// setcookie("id_afish_cookie", "", time()-3600);
 		}
 	?>
 	<section class="ftco-section">
@@ -80,98 +76,110 @@
 		</nav>
 
 	  <p class="main__header">Афиша</p>
-	  	<form action="" method="POST" class="main__form">
-				<div class="sort_genre">
-					<label class='label_sort'>Тип события</label>
-					<select name="textbox" id="combobox" class='select_sort'>
-						<option value="">Жанры</option>
-						<option value="художественная">художественная</option>
-						<option value="историческая">историческая</option>
-						<option value="фотография">фотография</option>
-						<option value="книжная">книжная</option>
-						<option value="тематическая">тематическая</option>
-						<option value="этнографическая">этнографическая</option>
-						<option value="персональная">персональная</option>
-						<option value="детям">детям</option>
-					</select>
-				</div>
-				<label class='label_sort_data'>Дата афиши</label>
-				<?php 
+	  <form action="" method="POST" class="main__form">
+            <div class="sort_genre">
+                <label class='label_sort'>Тип события</label>
+                <select name="textbox" id="combobox" class='select_sort'>
+                    <option value="">Жанры</option>
+                    <option value="художественная">художественная</option>
+                    <option value="историческая">историческая</option>
+                    <option value="фотография">фотография</option>
+                    <option value="книжная">книжная</option>
+                    <option value="тематическая">тематическая</option>
+                    <option value="этнографическая">этнографическая</option>
+                    <option value="персональная">персональная</option>
+                    <option value="детям">детям</option>
+                </select>
+            </div>
+
+            <?php 
 				$link2 = mysqli_connect("localhost", "root", "", "course", 3306);
 				
 				if($result2 = mysqli_query($link2, "SELECT Afisha.num_afish as num_afish, min(Afisha.data_start) as data_start, max(Afisha.data_end) as data_end from Afisha where data_start = (select min(data_start) from Afisha) and data_end = (select max(data_end) from Afisha)"))
 				{
 					while($object = mysqli_fetch_object($result2))
 					{
-
-						// echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
-						echo "<input type='date' name='calendar' min='$object->data_start' max='$object->data_end' name='data_event' class='select_sort'>";
-						// echo "<input type='date' min=$row['data_start'] max=$row'data_end'] name='data_event' class='form-control'>";
+						echo "<div class='date-picker__container'>";
+							echo "<label class='label_sort_data'>Начало даты афиши</label>";
+							echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data-start' class='select_sort'>";
+						echo "</div>";
+						
+						echo "<div class='date-picker__container'>";
+							echo "<label class='label_sort_data'>Конец даты афиши</label>";
+							echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data-end' class='select_sort'>";
+						echo "</div>";
 					}       
 					mysqli_free_result($result2);
 				}
 				mysqli_close($link2);
 				?>
-
-				<div class='free_check'>
-					<input type="checkbox" value="value1"  name = "choice" id="services">
-					<label for="services" style='color:black;'>
-						Бесплатно
-					</label>
-				</div>
-			<button type='submit' class='btn btn-secondary'>Применить</button>
-            <!-- <input placeholder='input min cost..' name='min' value='' class='form-control'/>
-            <input placeholder='input max cost..' name='max' value='' class='form-control'/>    -->
-            <!-- <button type="submit" class="btn btn-secondary">Ввод данных</button> -->
+            <div class='free_check'>
+                <input type="checkbox" value="value1" name="choice" id="services">
+                <label for="services" style='color:black;'>
+                    Бесплатно
+                </label>
+            </div>
+            <button type='submit' class='btn btn-secondary'>Применить</button>
         </form>
-	<div class="grid_afisha">
+		<div class="grid_afisha">
+
 			<?php
-				
+
 			$link = mysqli_connect("localhost", "root", "", "course",3306);
-			if(isset($_POST['search'])){
-				$sql = "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating, Afisha.cost_ticket as cost_ticket 
-				FROM Afisha left join Comments on Comments.num_afish = Afisha.num_afish where name_afish like '%".$_POST['search']."%'";
+
+			$search = '';
+			$check  = '';
+			$calendar  = '';
+			$choice  = '';
+			$array = [];
+
+			if(isset($_POST['search'])) {
+				$search = "name_afish like '%".$_POST['search']."%'";
+				$array['search'] = $search;
 			}
-			else if(isset($_POST['textbox']))
-				{
-					$check = $_POST['textbox'];
-					// echo "$check";
-					$sql = "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating, Afisha.cost_ticket as cost_ticket, Afisha.genre_afisha as genre_afisha
-					FROM Afisha left join Comments on Comments.num_afish = Afisha.num_afish where Afisha.genre_afisha = '$check' group by Afisha.name_afish order by avg_rating desc ";
-				}
-			
-			else if(isset($_POST['calendar']))
-			{
-				$date_calendar = $_POST['calendar'];
-				// echo "$date_calendar";
-				$sql = "SELECT Afisha.num_afish as num_afish, min(Afisha.data_start) as data_start, max(Afisha.data_end) as data_end, Afisha.photo as photo,avg(Comments.rating) as avg_rating, Afisha.cost_ticket as cost_ticket
-				FROM Afisha left join Comments on Comments.num_afish = Afisha.num_afish where data_start<='$date_calendar' and data_end>'$date_calendar' group by num_afish";		
+			if(isset($_POST['textbox'])) {
+				$check = "Afisha.genre_afisha = '" . $_POST['textbox'] . "'";
+				$array['check'] = $check;
 			}
-			else if(isset($_POST['choice']))
-			{
-					// echo $_POST['choice'];
-					if($_POST['choice'] == 'value1')
-					{
-						// echo "$_POST['choice']";
-						$sql = "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating, Afisha.cost_ticket as cost_ticket 
-						FROM Afisha left join Comments on Comments.num_afish = Afisha.num_afish where Afisha.cost_ticket = 0 group by Afisha.name_afish order by avg_rating desc ";
-					}
+			if(isset($_POST['data-start']) && isset($_POST['data-end'])) {
+				
+				$date_calendar_start = $_POST['data-start'];
+				$date_calendar_end = $_POST['data-end'];
+				
+				$calendar = "data_start<='$date_calendar_start' and data_end>'$date_calendar_end'";
+				$array['calendar'] = $calendar;
 			}
-			
-			else{
-				$sql = "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating, Afisha.cost_ticket as cost_ticket 
-				FROM Afisha left join Comments on Comments.num_afish = Afisha.num_afish group by Afisha.name_afish order by avg_rating desc";
+			if(isset($_POST['choice'])) {
+				$choice = 'Afisha.cost_ticket = 0';
+				$array['choice'] = $choice;
 			}
 
+			$newString = '';
+			
+			// Массив из параметров 
+			// ToDo: придумать способ соеденить эти параметры в одно целое, конечно же разделяя
+			// словами 'and' (Прим. param1 and param2 and param3 and ... paramN)
+			foreach ($array as $i => $value) {
+				if($i != count($array)) {
+					$newString = $newString . "$value" . " and ";
+				} else {
+					$newString = $newString . "$value";
+				}
+			}
+			echo "$newString";
+			$sql = "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating, Afisha.cost_ticket as cost_ticket FROM Afisha left join Comments on Comments.num_afish = Afisha.num_afish
+			where " . $newString . "group by Afisha.name_afish order by avg_rating desc"; // Последний кусок запроса выводить только при наличии хотя бы одного параметра ("group by Afisha.name_afish order by avg_rating desc")
+
+			// echo "$sql"; //Для просмотра всей строки запроса раскоментить
 
 			if ($result = mysqli_query($link, $sql)) 
 			{
 				while( $row = mysqli_fetch_assoc($result) )
 				{
 					if($row['avg_rating'] == null)
-                    {
-                        $row['avg_rating'] = 0;
-                    }
+					{
+						$row['avg_rating'] = 0;
+					}
 					echo "<form action='exh_info.php' class='grid_img' method='post'>";
 						echo "<button value='$row[num_afish]' name='call' class='accept_form'>";
 							echo "<img src='$row[photo]' width='210' height='300'>";
@@ -186,7 +194,7 @@
 			}
 			mysqli_close($link);
 			?>
-	</div>
+</div>
 	</section>
 
 	<script src="js/jquery.min.js"></script>
