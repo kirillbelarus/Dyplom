@@ -148,16 +148,6 @@
 				mysqli_close($link3);
 			?>
 		</div>
-		<!-- <div class="swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="./images/slider/1.jpg" alt="1" ></div>
-                <div class="swiper-slide"><img src="./images/slider/2.jpg" alt="2"></div>
-                <div class="swiper-slide"><img src="./images/slider/3.jpg" alt="3"></div>
-                <div class="swiper-slide"><img src="./images/slider/4.jpg" alt="4"></div>
-            </div>
-        </div> -->
-
-
 
     </section>
 

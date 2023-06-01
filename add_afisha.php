@@ -109,13 +109,13 @@
                 <input type="text" placeholder="название афиши" class="form-control" name="name_afish">
                 <input type="text" placeholder="введите цену" class="form-control" name="cost_ticket">
     
-                <div class="upload-file-container">
+                <!-- <div class="upload-file-container"> -->
                   <img id="image" src="#" alt="" />						
-                  <div class="upload-file-container-text">
-                    <span>Добавить фото</span>
+                  <!-- <div class="upload-file-container-text"> -->
+                    <!-- <span>Добавить фото</span> -->
                       <input type="file" name="pic" id="pic" size="25" />
-                  </div>
-                </div>	
+                  <!-- </div> -->
+                <!-- </div>	 -->
                 <select name="combo_type" class="form-control" id="combo_type">
                     <option value="">выберите тип афиши:</option>
                     <option value="лекция">лекция</option>
@@ -133,7 +133,7 @@
                     <option value="детям">детям</option>
                 </select>
                 
-                <input type="submit"  value="Upload" class="btn btn-secondary">
+                <input type="submit"  value="Загрузить" class="btn btn-secondary">
       </form>
     </div>
 </section>

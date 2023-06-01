@@ -134,19 +134,21 @@
 											echo "<img style='margin-top:12px;' src='./images/icons/email.png' width='25px' height='25px'>";
 											echo "<p>$row[e_mail]</p>";
 										echo "</div>";
-										if ($result3 = mysqli_query($link2, "SELECT Afisha.num_afish as num_afish, Afisha.photo as photo, max(Comments.rating) as rating,Afisha.name_afish as name_afish 
+
+										if ($result3 = mysqli_query($link2, "SELECT Afisha.num_afish as num_afish, Afisha.photo as photo, max(Comments.rating) as max_rating,Afisha.name_afish as name_afish 
 										from Afisha left join Comments on Comments.num_afish = Afisha.num_afish where rating = (Select max(rating) from Afisha) and id_museum = '$id_museum'")) 
 										{
 											$kol =0;
 											while( $pow = mysqli_fetch_assoc($result3) )
 											{
-
-												echo "<form  action='exh_info.php'  method='post'>";
+												if($row['max_rating']  !=0)
+												{
+													echo "<form  action='exh_info.php'  method='post'>";
 													echo "<button value='$pow[num_afish]' name='call' class='accept_form'>";
 														echo "<img src='$pow[photo]' width='250' height='350'>";
-														// echo "$row[name_afish]";
 													echo "</button>";
-												echo "</form>";
+													echo "</form>";
+												}
 											}
 										mysqli_free_result($result3);
 										}

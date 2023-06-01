@@ -411,7 +411,7 @@ output {
 
 .free_check{
   display:block;
-  
+  width: 150px;
 }
 .main__form {
   width: 57%;
@@ -445,7 +445,7 @@ output {
   /* margin-bottom: 5px; */
   margin-top: -28px;
   margin-left: -101px; 
-  width: 140px;
+  width: 250px;
   /* background-color: #002752; */
 }
 .main__form input {
