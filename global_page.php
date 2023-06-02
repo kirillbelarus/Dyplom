@@ -40,6 +40,7 @@
 						<li class="nav-item"><a href="./exposition.php" class="nav-link">Выставки</a></li>
 						<li class="nav-item"><a href="lecture.php" class="nav-link">Лекции</a></li>
 						<?php 
+						if(isset($_COOKIE['org']))
 							if($_COOKIE["org"] == 1):
 							echo "<li class='nav-item '>";
 							echo "<a href='add_afisha.php' class='nav-link active'>Добавить афишу</a>";

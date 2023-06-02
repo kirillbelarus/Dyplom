@@ -192,9 +192,8 @@
 			 }
 	   
 			 $sql = "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating, Afisha.cost_ticket as cost_ticket FROM Afisha left join Comments on Comments.num_afish = 
-			 Afisha.num_afish" . $where . $newString . "group by Afisha.name_afish order by avg_rating desc"; // Последний кусок запроса выводить только при наличии хотя бы одного параметра ("group by Afisha.name_afish order by avg_rating desc")
+			 Afisha.num_afish" . $where . $newString . "group by Afisha.name_afish order by avg_rating desc";
 			 
-			 // echo "$sql"; //Для просмотра всей строки запроса раскоментить
 			if ($result = mysqli_query($link, $sql)) 
 			{
 				while( $row = mysqli_fetch_assoc($result) )
@@ -206,11 +205,8 @@
 					echo "<form action='exh_info.php' class='grid_img' method='post'>";
 						echo "<button value='$row[num_afish]' name='call' class='accept_form'>";
 							echo "<img src='$row[photo]' width='210' height='300'>";
-							// echo "$row[name_afish]";
-							// echo "$row[avg_rating]";
 							echo "<div class='text_rating'>$row[avg_rating]★</div>";
 						echo "</button>";
-						// echo "<p style='position:absolute; display:flex; margin-top:335px;'>cost:$row[cost_ticket]</p>";
 					echo "</form>";
 				}
 			mysqli_free_result($result);

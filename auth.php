@@ -50,8 +50,6 @@
             setcookie('admin',0,time() + 3600,"/");
             setcookie('org_email',$org_email['e_mail'], time() + 3600,"/");
             setcookie("user",0, time()+ 3600, "/");
-            // setcookie('org',$org2['fio_org'], time() + 3600,"/");
-            // echo $org2['e_mail'];
         }
         else{
             echo "nope";
@@ -75,9 +73,6 @@
                 setcookie('admin',0,time() + 3600,"/");
                 setcookie('user_email',$user_email['e_mail'], time() + 3600,"/");
                 setcookie("user",1, time()+ 3600, "/");
-                // setcookie('user',$org2['login_user'], time() + 3600,"/");
-                // echo $org2['e_mail'];
-                // echo $org2['login_user'];
         }
         }
         
@@ -89,22 +84,3 @@
 
     mysqli_close($link);
 ?>
- 
-<!-- $query=mysqli_query($link, "SELECT * FROM Users where login_user = '$login' and password_user = '$password'");
-        // $user = mysqli_fetch_assoc($query);
-        $user = $query->fetch_assoc();
-        if(empty($user) or count($user) == 0)
-        {
-            echo "Такой пользователь не найден";
-            exit();
-        }
-
-        setcookie('user',$user['login_user'], time() + 3600,"/");
-        echo $user['login_user'];
-        if ( $query==true) {
-            header("Location: main.php");}
-        else {echo "Данные введены неверно!";
-            echo "$login";
-            echo "$e_mail";
-            echo "$password";}
- -->

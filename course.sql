@@ -17,7 +17,7 @@ create table Catalog_Museum(
     tel varchar(80),
     e_mail varchar(20),
     time_work varchar(20),
-    photo varchar(20),
+    photo varchar(80),
     id_org int,
     
     foreign key (id_org) references Organiz(id_org)
@@ -66,7 +66,7 @@ create table Request(
     login_user varchar(20),
     name_museum varchar(80),
     adress varchar(50),
-    tel int,
+    tel varchar(40),
     password_user varchar(20),
     time_work varchar(20),
     date_submission date,

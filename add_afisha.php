@@ -72,13 +72,16 @@
 		</nav>
 
     <div class="grid_afisha2 adding-section">
-      <form action="" method="POST">
+      <!-- <form action="" method="POST">
             <input type='date' name='data_start2' value='' class='form-control adding__date-start'/>
             <br>
             <button type="submit" class="btn btn-secondary">Ввести дату</button>
-      </form>
+      </form> -->
+      
       <form class="adding__afisha" enctype="multipart/form-data" action="./add2_afisha.php" method="post">
         <?php 
+        session_start();
+       
           $link = mysqli_connect("localhost", "root", "", "course",3306);
             if($result = mysqli_query($link, "SELECT id_museum, name_museum FROM Catalog_Museum"))
             {
@@ -93,29 +96,67 @@
               echo '</div>';
               mysqli_free_result($result);
             }
-        ?>
-        
-        <?php 
-              if(isset($_POST['data_start2']))
-              {
-                $min_value = $_POST['data_start2'];
-                echo "<input type='date' name='data_end' min='$min_value' class='form-control adding__date-end'>";
+            $today = date("Y-m-d");
+            echo "<div class='date-picker__container'>";
+            echo "<label class='label_sort_data'>Начало даты афиши</label>";
+            echo "<input type='date' min='$today' name='data-start' class='select_sort'>";
+            
+          echo "</div>";
+            
+          echo "<div class='date-picker__container'>";
+            echo "<label class='label_sort_data'>Конец даты афиши</label>";
+            echo "<input type='date' min='$today' name='data-end' class='select_sort'>";
+          echo "</div>";
+            $calendar  = '';
+            $array = [];
+            if(isset($_POST['data-start']) && isset($_POST['data-end']) && $_POST['data-end'] != '' && $_POST['data-start'] != '') {
+              $date_calendar_start = $_POST['data-start'];
+              $date_calendar_end = $_POST['data-end'];
+              
+              
+              // $_SESSION['data-end'] = $date_calendar_end;
+              $calendar = "data_start<='$date_calendar_start' and data_end>'$date_calendar_end'";
+              $array['calendar'] = $calendar;
+            }
+            
+              // if(isset($_POST['data_start2']))
+              // {
+              //   $min_value = $_POST['data_start2'];
+              //   echo "<input type='date' name='data_end' min='$min_value' class='form-control adding__date-end'>";
+              // }
+              // else
+              // {
+              //   echo "input first date";
+              // }
+
+              $newString = '';
+              $i = 1;
+            
+              foreach ($array as &$value) {
+                if($i != count($array)) {
+                $newString = $newString . $value . " and ";
+                } else {
+                $newString = $newString . $value . " ";
+                }
+            
+                $i++;
               }
-              else
-              {
-                echo "input first date";
+              unset($value);
+            
+              $where = ' ';
+            
+              if($newString != '') {
+                $where = ' where ';
               }
+              echo "x";
+              // echo "$array['calenda']";
+              echo "$newString";
                 ?>
                 <input type="text" placeholder="название афиши" class="form-control" name="name_afish">
                 <input type="text" placeholder="введите цену" class="form-control" name="cost_ticket">
     
-                <!-- <div class="upload-file-container"> -->
-                  <img id="image" src="#" alt="" />						
-                  <!-- <div class="upload-file-container-text"> -->
-                    <!-- <span>Добавить фото</span> -->
-                      <input type="file" name="pic" id="pic" size="25" />
-                  <!-- </div> -->
-                <!-- </div>	 -->
+                <img id="image" src="#" alt="" />						
+                <input type="file" name="pic" id="pic" size="25" />
                 <select name="combo_type" class="form-control" id="combo_type">
                     <option value="">выберите тип афиши:</option>
                     <option value="лекция">лекция</option>
@@ -137,7 +178,17 @@
       </form>
     </div>
 </section>
-
+<?php if (isset($_GET['unsuccess'])) {?>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Дата окончания меньше даты начала!',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#ff0000'
+                })
+            </script>
+    <?php   } ?>
 
 <?php if (isset($_GET['success'])) {?>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -150,54 +201,9 @@
                 })
             </script>
     <?php   } ?>
-
-	<!-- <script src="js/jquery.min.js"></script> -->
   <script src="js/popper.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script> 
 
 	</body>
-  <script>
-    document.getElementById('first_data').disabled = true;
-  // $(document).on('change', '[type="date"]', function (e) {
-  //   console.log(this.value);
-  // });
-
-   $(document).on('ready', function(){
-  function readURL(input) {
-
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#image').attr('src', e.target.result);
-        };
-
-        reader.readAsDataURL(input.files[0]);
-    }
-  }
-
-  $("#imgInput").change(function(){
-    readURL(this);
-  });
-});
-
-    bannerImage = document.getElementById('bannerImg');
-    imgData = getBase64Image(bannerImage);
-    localStorage.setItem("imgData", imgData);
-
-    function getBase64Image(img) {
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    var dataURL = canvas.toDataURL("image/png");
-
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-}
-
-</script>
 </html>
