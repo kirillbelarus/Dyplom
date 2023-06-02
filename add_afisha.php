@@ -72,11 +72,6 @@
 		</nav>
 
     <div class="grid_afisha2 adding-section">
-      <!-- <form action="" method="POST">
-            <input type='date' name='data_start2' value='' class='form-control adding__date-start'/>
-            <br>
-            <button type="submit" class="btn btn-secondary">Ввести дату</button>
-      </form> -->
       
       <form class="adding__afisha" enctype="multipart/form-data" action="./add2_afisha.php" method="post">
         <?php 
@@ -112,23 +107,9 @@
             if(isset($_POST['data-start']) && isset($_POST['data-end']) && $_POST['data-end'] != '' && $_POST['data-start'] != '') {
               $date_calendar_start = $_POST['data-start'];
               $date_calendar_end = $_POST['data-end'];
-              
-              
-              // $_SESSION['data-end'] = $date_calendar_end;
               $calendar = "data_start<='$date_calendar_start' and data_end>'$date_calendar_end'";
               $array['calendar'] = $calendar;
             }
-            
-              // if(isset($_POST['data_start2']))
-              // {
-              //   $min_value = $_POST['data_start2'];
-              //   echo "<input type='date' name='data_end' min='$min_value' class='form-control adding__date-end'>";
-              // }
-              // else
-              // {
-              //   echo "input first date";
-              // }
-
               $newString = '';
               $i = 1;
             
@@ -148,9 +129,7 @@
               if($newString != '') {
                 $where = ' where ';
               }
-              echo "x";
-              // echo "$array['calenda']";
-              echo "$newString";
+
                 ?>
                 <input type="text" placeholder="название афиши" class="form-control" name="name_afish">
                 <input type="text" placeholder="введите цену" class="form-control" name="cost_ticket">

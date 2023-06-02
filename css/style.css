@@ -414,7 +414,7 @@ output {
   width: 150px;
 }
 .main__form {
-  width: 57%;
+  width: 80%;
   height: 50px;
   display: flex;
   /* position: relative; */
@@ -438,13 +438,13 @@ output {
   /* background-color: #002752; */
 }
 .label_sort_data{
-  font-size: 20px;
+  font-size: 17px;
   position: absolute;
   color: #000;
   font-weight: bold;
   /* margin-bottom: 5px; */
-  margin-top: -28px;
-  margin-left: -101px; 
+  margin-top: -23px;
+  margin-left: 0px; 
   width: 250px;
   /* background-color: #002752; */
 }

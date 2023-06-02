@@ -141,7 +141,7 @@
 											$kol =0;
 											while( $pow = mysqli_fetch_assoc($result3) )
 											{
-												if($row['max_rating']  !=0)
+												if($pow['max_rating']  !=0)
 												{
 													echo "<form  action='exh_info.php'  method='post'>";
 													echo "<button value='$pow[num_afish]' name='call' class='accept_form'>";

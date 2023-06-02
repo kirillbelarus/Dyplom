@@ -15,7 +15,6 @@
       }
       echo "Соединение с MySQL установлено!";
         $id_request = $_POST['add_user'];
-        echo "xren";
         if ($result = mysqli_query($link, "SELECT id_request,id_user,e_mail,login_user,tel,password_user from Request where id_request = '$id_request'"))
                 {
                   while( $row = mysqli_fetch_assoc($result) )
@@ -33,7 +32,6 @@
                     $mail->Password = 'ykhemhcozbhecghd';
                     $mail->SMTPSecure = 'ssl';
                     $mail->Port = 465;
-                    echo "xui"; 
                     $mail->setFrom('girelkirill@gmail.com');
                     echo "$id_request";
                     $mail->addAddress($row['e_mail']);
@@ -44,9 +42,7 @@
                     $mail->isHTML(true);
                     $mail->Subject =$text.$row['login_user'];
                     $mail->Body=$body_text;
-                    echo "zalupa";
                     $mail->send();
-                    echo "xuina";
                     echo "$login_user";
                     $query=mysqli_query($link, "INSERT INTO Organiz (e_mail,fio_org,tel,password_org) VALUES ('$email_user','$login_user','$tel','$password_user')"); 
                     $query2=mysqli_query($link, "DELETE FROM Request WHERE id_request = $id_request");
@@ -59,7 +55,6 @@
                 }
             mysqli_close($link);
     }
-    echo "check1";
     if(isset($_POST["delete_user"])){
         $link = mysqli_connect("localhost", "root", "", "course", 3306);
       if (!$link) {
@@ -68,12 +63,10 @@
           exit;
       }
       echo "Соединение с MySQL установлено!";
-      echo "check2";
         $id_request = $_POST['delete_user'];
         echo "$id_request";
         if ($result2 = mysqli_query($link, "SELECT id_request,id_user,e_mail,login_user,tel,password_user from Request where id_request = '$id_request'"))
                 {
-                  echo "check3";
                   while( $row = mysqli_fetch_assoc($result2) )
                   {
                     $mail = new PHPMailer(true);
