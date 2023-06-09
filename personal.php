@@ -75,7 +75,7 @@
 									$value = $_POST['search'];
 								else
 									$value ="";
-									echo "<input type='text' name = 'search' value='$value' class='form-control pl-3' placeholder='Search'>";
+									echo "<input type='text' name = 'search' value='$value' class='form-control pl-3' placeholder='Поиск'>";
 							?>
 							<button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
 						</div>
@@ -160,7 +160,7 @@
 				<div class="col-md-5 border-right">
 						<div class="p-3 py-5">
 							<div class="d-flex justify-content-between align-items-center mb-3">
-								<h4 class="text-right">Profile Settings</h4>
+								<h4 class="text-right">Настройки профиля</h4>
 							</div>
 							<form action="correct_data.php" method="POST">
 								<div class="row mt-2">
@@ -178,8 +178,8 @@
 								while($row = mysqli_fetch_assoc($result))
 								{
 										 echo "<div class='input_profile'><label class='labels'>ФИО(логин)</label><input type='text' class='form-control' placeholder='$row[login_user]' value='' name='login'></div>";
-										echo "<div class='input_profile'><label class='labels'>E_mail</label><input type='text' class='form-control' value='' placeholder='$row[e_mail]' pattern='^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$' name='e_mail'></div>";
-										echo "<div class='input_profile'><label class='labels'>password</label><input type='text' class='form-control' placeholder='$row[password_user]' value='' name='pass'></div>";
+										echo "<div class='input_profile'><label class='labels'>электронная почта</label><input type='text' class='form-control' value='' placeholder='$row[e_mail]' pattern='^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$' name='e_mail'></div>";
+										echo "<div class='input_profile'><label class='labels'>пароль</label><input type='text' class='form-control' placeholder='$row[password_user]' value='' name='pass'></div>";
 								}       
 								mysqli_free_result($result);
 							}
@@ -212,7 +212,7 @@
 				}
 				?>
 								</div>
-								<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+								<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Сохранить изменения</button></div>
 							</form>
 							
 						</div>

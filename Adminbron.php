@@ -109,7 +109,7 @@
                 else{
                   $value = "";
                 }
-                echo "<input placeholder='введите название афиши..' name='name_afish' value='$value'/>";  
+                echo "<input placeholder='введите название брони..' name='name_afish' value='$value'/>";  
             ?>
             
             <button type="submit">Поиск</button>

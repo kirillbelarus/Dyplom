@@ -198,14 +198,23 @@
 			{
 				while( $row = mysqli_fetch_assoc($result) )
 				{
-					if($row['avg_rating'] == null)
-                    {
-                        $row['avg_rating'] = 0;
-                    }
+					
 					echo "<form action='exh_info.php' class='grid_img' method='post'>";
 						echo "<button value='$row[num_afish]' name='call' class='accept_form'>";
 							echo "<img src='$row[photo]' width='210' height='300'>";
-							echo "<div class='text_rating'>$row[avg_rating]★</div>";
+							if($row['avg_rating'] != null)
+							{
+								$rating = round($row['avg_rating'],2);
+								echo "<div class='text_rating'>";
+								if($row['avg_rating']>4.5)
+								{
+									echo "<p class='high_rating'>$rating ★</p>";
+								}
+								else
+									echo "<p class='low_rating'>$rating ★</p>";
+								echo "</div>";
+							}
+							
 						echo "</button>";
 					echo "</form>";
 				}

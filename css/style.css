@@ -712,10 +712,20 @@ display: none;
   justify-content: space-between;
 }
 .text_rating{
+  font-size: 20px;
   background-color:var(--light);
-
+  margin-top: 264px;
+  /* opacity: 0.8; */
   position: absolute;
   /* display: flex; */
+}
+.high_rating{
+  background-color: rgba(206,27,23,.9);
+  color: white;
+}
+.low_rating{
+  background-color: rgba(102,102,102,.9);
+  color: white;
 }
 .profile__btn {
   width: 40px;

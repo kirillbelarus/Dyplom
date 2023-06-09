@@ -23,7 +23,7 @@
 								$value = $_POST['search'];
 							else
 								$value ="";
-								echo "<input type='text' name = 'search' value='$value' class='form-control pl-3' placeholder='Search'>";
+								echo "<input type='text' name = 'search' value='$value' class='form-control pl-3' placeholder='Поиск'>";
 						?>
 						<button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
 					</div>

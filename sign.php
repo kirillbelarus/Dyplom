@@ -35,10 +35,10 @@
           </div>
           
           <div class="block_text">
-              <input type = "text" class="form-control" placeholder="Username" name="login" id = "login">
+              <input type = "text" class="form-control" placeholder="Логин" name="login" id = "login">
           </div>
           <div class="block_text">
-              <input  type = "password" class="form-control" placeholder="Password" name="pass" id = "pass">
+              <input  type = "password" class="form-control" placeholder="Пароль" name="pass" id = "pass">
           </div>
           
           <div class="button_sign block_text">
