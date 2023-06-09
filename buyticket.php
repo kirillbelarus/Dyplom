@@ -91,36 +91,51 @@
             }
             if(isset($id))
             {
+                $arrFull = Array();
+
                 if($query = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.cost_ticket as cost_ticket, Afisha.photo as photo, Afisha.id_museum as id_museum 
-                FROM Afisha inner join Catalog_Museum  where '$id'= Afisha.id_museum group by Afisha.num_afish"))
+                FROM Afisha inner join Catalog_Museum where $id= Afisha.id_museum group by Afisha.num_afish"))
+                {
+                    while($object = mysqli_fetch_assoc($query)) {
+                        $_SESSION["museum_id"]="$object[id_museum]";
+                        $_SESSION["new_num_afish"] = $object['num_afish'];
+                        $arr_info = array(
+                            "num" => "$object[num_afish]",
+                            "photo" => "$object[photo]",
+                            "name_duck" => "$object[name_afish]",
+                            "cost" => "$object[cost_ticket]",
+                        );
+    
+                        array_push($arrFull, $arr_info);
+    
+                        // echo "<p>Название мероприятия:<span class='name_afisha'>$object[name_afish]</span></p>";
+    
+                    }
+                }
+
+
+                if($query = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.cost_ticket as cost_ticket, Afisha.photo as photo, Afisha.id_museum as id_museum 
+                FROM Afisha inner join Catalog_Museum where $id= Afisha.id_museum group by Afisha.num_afish limit 1"))
                 { 
+                    
                     while($pow = mysqli_fetch_assoc($query))
                     {
-                        $arrFull = Array();
-                        while( $row = mysqli_fetch_assoc($query) )
-                        {
-                            
-                            $_SESSION["museum_id"]="$row[id_museum]";
-                            $_SESSION["new_num_afish"] = $row['num_afish'];
-                            $arr_info = array(
-                                "num" => "$row[num_afish]",
-                                "photo" => "$row[photo]",
-                                "name_duck" => "$row[name_afish]",
-                                "cost" => "$row[cost_ticket]",
-                            );
-                            array_push($arrFull, $arr_info);
-                        } 
+                        
                         //   mysqli_free_result($query);
-                        echo "<img src='./images/back_museum.png' class='photo_ticket'>";
+                        echo "<img src='$pow[photo]' class='photo_ticket' alt='$pow[name_afish]'>";
                         echo '<div class="box">';
+                        
                             echo "<p>Название мероприятия:<span class='name_afisha'>$pow[name_afish]</span></p>";
                             echo "<p>Стоимость одного билета: <span class='cost-ticket'>$pow[cost_ticket]</span>р</p>";
                                 echo '<select class="combobox_select form-control" name="ch">'; 
                                     echo '<option value="">Выберите мероприятия</option>';
-                                    if($result = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, Afisha.data_start as data_start, Afisha.data_end as data_end FROM Afisha inner join Catalog_Museum  where '$id'= Afisha.id_museum group by Afisha.num_afish"))
-                                    {
+                                    if($result = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, Afisha.data_start as data_start, Afisha.data_end as data_end, Afisha.cost_ticket as cost_ticket, Afisha.id_museum as id_museum FROM Afisha inner join Catalog_Museum  where '$id'= Afisha.id_museum group by Afisha.num_afish"))
+                                    {   
+                                        
                                         while($object = mysqli_fetch_object($result))
                                         {
+                                            
+
                                             echo "<option id='select_afish' value='$object->num_afish'>$object->name_afish</option>"; 
                                             // echo "<input type='date' min='$object->data_start' max='$object->data_end' name='data_event' class='form-control'>";
                                         }
@@ -148,25 +163,32 @@
                 }
             }
         else{
+
             if($query = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.cost_ticket as cost_ticket, Afisha.photo as photo, Afisha.id_museum as id_museum 
             FROM Afisha inner join Catalog_Museum  where '$_COOKIE[id_museum]'= Afisha.id_museum group by Afisha.num_afish"))
             { 
+                $arrFull = Array();
+                while( $row = mysqli_fetch_assoc($query) )
+                {
+                  
+                    $_SESSION["museum_id"]="$row[id_museum]";
+                    $_SESSION["new_num_afish"] = $row['num_afish'];
+                    $arr_info = array(
+                        "num" => "$row[num_afish]",
+                        "photo" => "$row[photo]",
+                        "name_duck" => "$row[name_afish]",
+                        "cost" => "$row[cost_ticket]",
+                    );
+                    array_push($arrFull, $arr_info);
+                } 
+            }
+
+            if($query = mysqli_query($link, "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.cost_ticket as cost_ticket, Afisha.photo as photo, Afisha.id_museum as id_museum 
+            FROM Afisha inner join Catalog_Museum  where '$_COOKIE[id_museum]'= Afisha.id_museum group by Afisha.num_afish limit 1"))
+            { 
                 while($pow = mysqli_fetch_assoc($query))
                 {
-                  $arrFull = Array();
-                  while( $row = mysqli_fetch_assoc($query) )
-                  {
-                    
-                      $_SESSION["museum_id"]="$row[id_museum]";
-                      $_SESSION["new_num_afish"] = $row['num_afish'];
-                      $arr_info = array(
-                          "num" => "$row[num_afish]",
-                          "photo" => "$row[photo]",
-                          "name_duck" => "$row[name_afish]",
-                          "cost" => "$row[cost_ticket]",
-                      );
-                      array_push($arrFull, $arr_info);
-                  } 
+                  
                 //   mysqli_free_result($query);
                 
                     echo '<div class="box">';
@@ -216,6 +238,7 @@
                 const event4 = document.querySelector(".cost-ticket");
                 // const event5 = document.
                 function func(){
+                    console.log(objj);
                     objj.forEach((el)=>{
                         if(el.num === this.value)
                         {
