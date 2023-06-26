@@ -100,9 +100,30 @@
 			</div>
 		</nav>
 
-      <!-- <h1 style="margin-left:40%">Поиск:</h1> -->
-        <form action="" method="POST" style="margin-left:40%; margin-top:100px;">
-            <?php
+        <?php
+            
+            $link_5 = mysqli_connect("localhost", "root", "", "course", 3306);
+            $check = "SELECT count(num_afish) as count_id FROM Afisha";
+            if($result5 = mysqli_query($link_5, $check))
+            {
+                while( $row = mysqli_fetch_assoc($result5) )
+                {
+                    
+                    // echo $row['count_id'];
+                    $_SESSION['count_bron'] = $row['count_id'];
+                }
+            
+            mysqli_free_result($result5);
+                }
+            if($_SESSION['count_bron']==0)
+            {
+                echo "<p style='font-size: 50px;
+                text-align: center;margin-top:15%'>Афиш нет</p>";
+            }
+            else{
+    //   <!-- <h1 style="margin-left:40%">Поиск:</h1> -->
+        echo "<form action='' method='POST' style='margin-left:40%; margin-top:100px;'>";
+           
                 if(isset($_POST['name_afish']))
                 {
                   $value = $_POST['name_afish'];
@@ -112,20 +133,20 @@
                   $value = "";
                 }
                 echo "<input placeholder='введите название афиши..' name='name_afish' value='$value'/>";  
-            ?>
+       
             
-            <button type="submit">Поиск</button>
-        </form>
+                echo "<button type='submit'>Поиск</button>";
+                echo "  </form>";
 
-    <table border="1" style="width:75%; margin-right:auto; margin-left:auto; margin-top:100px;" class="styled-table">
-        <tr>
-            <th>Название музея</th>
-            <th>Организатор</th>
-            <th>Название афиши</th> 
-            <th>Дата окончания</th>
-            <th>Стоимость билета</th> 
-        </tr>
-        <?php
+        echo " <table border='1' style='width:75%; margin-right:auto; margin-left:auto; margin-top:100px;' class='styled-table'>";
+        echo " <tr>";
+        echo "    <th>Название музея</th>";
+            echo "    <th>Организатор</th>";
+            echo "    <th>Название афиши</th> ";
+            echo "    <th>Дата окончания</th>";
+            echo "     <th>Стоимость билета</th> ";
+            echo "</tr>";
+     
              $link = mysqli_connect("localhost", "root", "", "course", 3306);
                 if(isset($_POST['name_afish']))
                     $sql = "SELECT * FROM Afisha inner join Catalog_Museum on Catalog_Museum.id_museum = Afisha.id_museum inner join Organiz on Organiz.id_org = Afisha.id_org where name_afish = '$_POST[name_afish]'";
@@ -139,23 +160,19 @@
                       echo "<form action='deleteafisha.php' method='POST'>";
                       echo "<td>".$row['name_museum']."</td>";
                       echo "<td>".$row['e_mail']."</td>";
-                    //   echo "<td>".$row['name_afish']."</td>";
                       echo "<td>".$row['name_afish']."</td>";
                       echo "<td>".$row['data_end']."</td>";
                       echo "<td>".$row['cost_ticket']."</td>";
                       echo "<td style='justify-content: center; display:flex;'>"
                         ."<button type='submit' name='num_afish' value='".$row['num_afish']."'>Удалить</button>"
                         ."</td>";
-                      // echo "<td style='justify-content: center; display:flex;'>"
-                      // ."<button type='submit' name='id' value='".$row['id']."'>Удалить</button>"
-                      // ."</td>";
                       echo "</form>";
                       echo "</tr>";
                   }
                 echo '</table>';
                 mysqli_free_result($result);
                 }
-                    
+            } 
             ?>
 	</section>
 

@@ -79,7 +79,7 @@
                     // echo "<div class='text_photo'>";
                             
                             echo "<button value='$row[num_afish]' name='call' class='accept_form'>";
-                            echo "<img src='$row[photo]'>";
+                            echo "<img src='$row[photo]' width='350' height='500'>";
                             echo "</button>";
                     // echo "</div>";
 					// echo "<a href='#' '$row[name_afish]'> </a>";

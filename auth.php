@@ -77,7 +77,7 @@
         }
         
         if ( $query==true) {
-            header("Location: main.php");}
+            header("Location: global_page.php");}
         else {
             header("Location: sign.php?unsuccess=1");
         }

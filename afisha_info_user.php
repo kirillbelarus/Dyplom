@@ -67,7 +67,7 @@
 
 
 	
-		<p class="main__header">Ваши брони</p>
+		<p class="main__header">Ваши бронирования</p>
 	<div class="grid_exposition">
 		<?php 
 			session_start();

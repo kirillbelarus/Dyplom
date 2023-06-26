@@ -4,8 +4,6 @@
         $login = filter_var(trim($_POST['login']),FILTER_SANITIZE_STRING);
         $e_mail = filter_var(trim($_POST['e_mail']),FILTER_SANITIZE_EMAIL);
         $password = filter_var(trim($_POST['pass']),FILTER_SANITIZE_STRING);
-        // $check = $_POST['choice'];
-        // $login = $_POST['login'];    
         $link = mysqli_connect("localhost", "root", "", "course", 3306);
         require 'phpmailer/src/Exception.php';
         require 'phpmailer/src/PHPMailer.php';
@@ -37,7 +35,6 @@
         }
             echo "nope";
             $query=mysqli_query($link, "SELECT * FROM Users where e_mail = '$e_mail'");
-            // $user = mysqli_fetch_assoc($query);
             $user = $query->fetch_assoc();
             if(empty($user) or count($user) == 0)
             {
@@ -56,7 +53,7 @@
                         $mail->Host = 'smtp.gmail.com';
                         $mail->SMTPAuth = true;
                         $mail->Username = 'girelkirill@gmail.com';
-                        $mail->Password = 'bvypznaepcxrrqcz';
+                        $mail->Password = 'wffbhjwqtzlmbrcw';
                         $mail->SMTPSecure = 'ssl';
                         $mail->Port = 465;
                         $mail->Debugoutput = function($str, $level) {$GLOBALS['status'][] = $str;}; 
@@ -83,23 +80,12 @@
                         $status = "Сообщение не было отправлено. Причина ошибки: {$mail->ErrorInfo}";
                     }
                     
-                    echo json_encode(["result" => $result, "status" => $status]);
-                    
-
-                    
-                    //     catch (Exception $e) {
-                    //     $result = "error";
-                    //     $status = "Сообщение не было отправлено. Причина ошибки: {$mail->ErrorInfo}";
-                    // }
-                    // echo "$e_mail";
-                    // exit();
-                    
+                    echo json_encode(["result" => $result, "status" => $status]);                    
                 }
                 else if(empty($user2) or count($user2) != 0)
                 {
                     header("Location: registr.php?unsuccessed_login=0");
                     echo "Такой пользователь найден";
-                    // echo "$e_mail";
                     exit();
                 }
             }
@@ -108,9 +94,7 @@
                 header("Location: registr.php?unsuccessed=0");
                 echo "Такой пользователь найден";
                 echo "$e_mail";
-                exit();
-                // $result=mysqli_query($link, "INSERT INTO Organiz (fio_org,e_mail,password_org) VALUES ('$login','$e_mail','$password')");
-                
+                exit(); 
             }
             $query2=mysqli_query($link, "SELECT * FROM Users where e_mail = '$e_mail'");
             $org2 = $query2->fetch_assoc();
@@ -121,13 +105,11 @@
                 setcookie("user",1, time()+ 3600, "/");
 
         if ( $query==true) {
-            header("Location: main.php?success=1");
+            header("Location: global_page.php?success=1");
         }
         else {echo "Данные введены неверно!";
             echo "$login";
             echo "$e_mail";
             echo "$password";
         }
-
-        // mysqli_close($link);
 ?>

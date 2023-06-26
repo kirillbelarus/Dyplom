@@ -20,6 +20,7 @@
                   while( $row = mysqli_fetch_assoc($result) )
                   {
                     $mail = new PHPMailer(true);
+                    try{
                     $email_user = $row['e_mail'];
                     $login_user = $row['login_user'];
                     $tel = $row['tel'];
@@ -29,7 +30,7 @@
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
                     $mail->Username = 'girelkirill@gmail.com';
-                    $mail->Password = 'ykhemhcozbhecghd';
+                    $mail->Password = 'fbiyjegokswaoxoj';
                     $mail->SMTPSecure = 'ssl';
                     $mail->Port = 465;
                     $mail->setFrom('girelkirill@gmail.com');
@@ -43,6 +44,13 @@
                     $mail->Subject =$text.$row['login_user'];
                     $mail->Body=$body_text;
                     $mail->send();
+                    if ($mail->send()) {$result = "success";} 
+                    else {$result = "error";}
+
+                    } catch (Exception $e) {
+                        $result = "error";
+                        $status = "Сообщение не было отправлено. Причина ошибки: {$mail->ErrorInfo}";
+                    }
                     echo "$login_user";
                     $query=mysqli_query($link, "INSERT INTO Organiz (e_mail,fio_org,tel,password_org) VALUES ('$email_user','$login_user','$tel','$password_user')"); 
                     $query2=mysqli_query($link, "DELETE FROM Request WHERE id_request = $id_request");
@@ -70,12 +78,12 @@
                   while( $row = mysqli_fetch_assoc($result2) )
                   {
                     $mail = new PHPMailer(true);
-
+                    try{
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
                     $mail->Username = 'girelkirill@gmail.com';
-                    $mail->Password = 'bvypznaepcxrrqcz';
+                    $mail->Password = 'fbiyjegokswaoxoj';
                     $mail->SMTPSecure = 'ssl';
                     $mail->Port = 465;
             
@@ -89,6 +97,14 @@
                     $mail->Body=$body_text;
             
                     $mail->send();
+
+                    if ($mail->send()) {$result = "success";} 
+                    else {$result = "error";}
+
+                    } catch (Exception $e) {
+                        $result = "error";
+                        $status = "Сообщение не было отправлено. Причина ошибки: {$mail->ErrorInfo}";
+                    }
                     $query=mysqli_query($link, "DELETE FROM Request WHERE id_request = $id_request");
                     if ( $query==true) {
                         header("Location: AdminRequest.php?success=1");

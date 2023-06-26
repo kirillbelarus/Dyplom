@@ -69,7 +69,6 @@
 
 	<div class="grid_ticket_afisha">
     <h1 class="name_ticket">Покупка билета в музей</h1>
-    <!-- <p class='name_afisha'>xren</p> -->
     <form action="add_buy.php"  class="form__container" method="POST">
       <!-- <form action="./add_buy.php" id="orderForm" method="post">  -->
         <!-- <img src='./images/back_museum.png' class="photo_ticket"> -->

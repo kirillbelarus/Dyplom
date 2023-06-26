@@ -124,13 +124,15 @@
                 }
                 else{
                     if($query = mysqli_query($link, "SELECT Afisha.num_afish as num_afish,Afisha.name_afish as name_afish,Afisha.data_start as data_start,
-                    Afisha.data_end as data_end,Afisha.photo as photo,Afisha.cost_ticket as cost_ticket from Afisha where num_afish = '$_COOKIE[id_num_afish]'"))
+                    Afisha.data_end as data_end,Afisha.photo as photo,Afisha.cost_ticket as cost_ticket, Catalog_Museum.id_museum as id_museum, Catalog_Museum.name_museum as name_museum from Afisha  right join Catalog_Museum on Afisha.id_museum = Catalog_Museum.id_museum where num_afish = '$_COOKIE[id_num_afish]'"))
                     { 
                         while( $row = mysqli_fetch_assoc($query) )
                         {
                             $_SESSION["new_num_afish"] = $row['num_afish'];
+                            $_SESSION["museum_id"] = $row['id_museum'];
                             echo "<img src='$row[photo]' class='photo_ticket'>";
                             echo "<div class='box'>";
+                                echo "<p>Название музея: $row[name_museum]</p>";
                                 echo "<p>Название мероприятия: $row[name_afish]</p>";
                                 echo "<p>Стоимость одного билета: <span class='cost-ticket'>$row[cost_ticket]</span>р</p>";
                                 echo "<input type='number' placeholder='кол-во билетов' id='kol_ticket' name='kol_ticket' class='form-control' value=''> ";
@@ -145,9 +147,9 @@
                                     }       
                                 }   
                                 echo "<select name='textbox' id='combobox' class='form-control'>";
-                                echo "    <option value=''>Нужен ли гид?</option>";
-                                echo "    <option value='yes'>Да</option>";
-                                echo "    <option value='net'>Нет</option>";
+                                echo "<option value=''>Нужен ли гид?</option>";
+                                echo "<option value='yes'>Да</option>";
+                                echo "<option value='net'>Нет</option>";
                                 echo "</select>";
                                 echo "<h4 id='sum' style='text-align: center;'>Общая сумма заказа: <span id='total-sum'></span>р.</h4>";
                                 echo "<input type='submit' class='btn btn-info'>";

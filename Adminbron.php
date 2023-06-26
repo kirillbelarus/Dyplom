@@ -12,6 +12,19 @@
 	
 	<link rel="stylesheet" href="css/style.css">
 
+    <script>    
+            // var table = document.getElementById("myTable");
+           
+        // console.log("sadsad");
+        // console.log(x);
+        // var tbl = document.getElementById('x');
+        // if (x<=1){
+        //     x.parentNode.removeChild('myTable');
+        //     table.parentNode.removeChild(table);
+            // document.getElementById("myTable")[0].style.display = 'none';
+        // }
+    </script>
+
 	</head>
     <style>
         .styled-table {
@@ -57,6 +70,7 @@
 				<form action="#" class="searchform order-sm-start order-lg-last" method="POST">
 					<div class="form-group d-flex">
 						<?php 
+                        session_start();
 							if(isset($_POST['search']))
 								$value = $_POST['search'];
 							else
@@ -100,65 +114,91 @@
 			</div>
 	</nav>
 
-        <form action="" method="POST" style="margin-left:40%; margin-top:100px;">
-            <?php
-                if(isset($_POST['name_afish']))
-                {
-                  $value = $_POST['name_afish'];
-                }
-                else{
-                  $value = "";
-                }
-                echo "<input placeholder='введите название брони..' name='name_afish' value='$value'/>";  
-            ?>
-            
-            <button type="submit">Поиск</button>
-        </form>
+       
 
-    <table border="1" style="width:75%; margin-right:auto; margin-left:auto; margin-top:100px;" class="styled-table">
-        <tr>
-            <th>название музея</th>
-            <th>имя афиши</th>
-            <th>почта</th> 
-            <th>дата визита</th>
-            <th>кол-во человек</th>
-            <th>удалить</th> 
-        </tr>
+        <!-- <script>
+            var x = document.getElementById("myTable").rows.length;
+            console.log(x);
+        </script> -->
         <?php
-             $link = mysqli_connect("localhost", "root", "", "course", 3306);
-                if(isset($_POST['name_afish']))
-                    $sql = "SELECT * FROM Bron inner join Catalog_Museum on Catalog_Museum.id_museum = Bron.id_museum inner join Users on Users.id_user = Bron.id_user inner join Afisha on Afisha.num_afish = Bron.num_afish where name_afish = '$_POST[name_afish]'";
-                else
-                    $sql = 'SELECT * FROM Bron inner join Catalog_Museum on Catalog_Museum.id_museum = Bron.id_museum inner join Users on Users.id_user = Bron.id_user inner join Afisha on Afisha.num_afish = Bron.num_afish';
-                if ($result = mysqli_query($link, $sql))
+            
+            $link_5 = mysqli_connect("localhost", "root", "", "course", 3306);
+            $check = "SELECT count(id_bron) as count_id FROM Bron";
+            if($result5 = mysqli_query($link_5, $check))
+            {
+                while( $row = mysqli_fetch_assoc($result5) )
                 {
-                  while( $row = mysqli_fetch_assoc($result) )
-                  {
-                      echo "<tr>";
-                      echo "<form action='deletebron.php' method='POST'>";
-                      echo "<td>".$row['name_museum']."</td>";
-                      echo "<td>".$row['name_afish']."</td>";
-                      echo "<td>".$row['e_mail']."</td>";
-                      echo "<td>".$row['data_visit']."</td>";
-                      echo "<td>".$row['kol_chel']."</td>";
-                      echo "<td style='justify-content: center; display:flex;'>"
-                        ."<button type='submit' name='id_bron' value='".$row['id_bron']."'>Удалить</button>"
-                        ."</td>";
-                      echo "</form>";
-                      echo "</tr>";
-                  }
-                echo '</table>';
-                mysqli_free_result($result);
-                }
                     
-            ?>
+                    // echo $row['count_id'];
+                    $_SESSION['count_bron'] = $row['count_id'];
+                }
+            
+            mysqli_free_result($result5);
+                }
+            if($_SESSION['count_bron']==0)
+            {
+                echo "<p style='font-size: 50px;
+                text-align: center;margin-top:15%'>Бронивараний нет</p>";
+            }
+            else{
+
+            echo "  <form action='' method='POST' style='margin-left:40%; margin-top:100px;'>";
+                    if(isset($_POST['name_afish']))
+                    {
+                      $value = $_POST['name_afish'];
+                    }
+                    else{
+                      $value = "";
+                    }
+                echo "<input placeholder='введите название брони..' name='name_afish' value='$value'/>";  
+            echo"  <button type='submit'>Поиск</button>";
+
+               echo " </form>";
+                echo "   <table border='1' style='width:75%; margin-right:auto;margin-left:auto; margin-top:100px;' id='myTable' class='styled-table'>";
+                echo "   <tr>";
+                echo "   <th>название музея</th>";
+                    echo "  <th>имя афиши</th>";
+                    echo "  <th>почта</th> ";
+                    echo " <th>дата визита</th>";
+                    echo " <th>кол-во человек</th>";
+                    echo "<th>удалить</th> ";
+                echo "</tr>";
+                     $link = mysqli_connect("localhost", "root", "", "course", 3306);
+                        if(isset($_POST['name_afish']))
+                            $sql = "SELECT * FROM Bron inner join Catalog_Museum on Catalog_Museum.id_museum = Bron.id_museum inner join Users on Users.id_user = Bron.id_user inner join Afisha on Afisha.num_afish = Bron.num_afish where name_afish = '$_POST[name_afish]'";
+                        else
+                            $sql = 'SELECT * FROM Bron inner join Catalog_Museum on Catalog_Museum.id_museum = Bron.id_museum inner join Users on Users.id_user = Bron.id_user inner join Afisha on Afisha.num_afish = Bron.num_afish';
+                        if ($result = mysqli_query($link, $sql))
+                        {
+                          while( $row = mysqli_fetch_assoc($result) )
+                          {
+                              echo "<tr>";
+                              echo "<form action='deletebron.php' method='POST'>";
+                              echo "<td>".$row['name_museum']."</td>";
+                              echo "<td>".$row['name_afish']."</td>";
+                              echo "<td>".$row['e_mail']."</td>";
+                              echo "<td>".$row['data_visit']."</td>";
+                              echo "<td>".$row['kol_chel']."</td>";
+                              echo "<td style='justify-content: center; display:flex;'>"
+                                ."<button type='submit' name='id_bron' value='".$row['id_bron']."'>Удалить</button>"
+                                ."</td>";
+                              echo "</form>";
+                              echo "</tr>";
+                          }
+                        echo '</table>';
+                        mysqli_free_result($result);
+                        }      
+            }
+        ?>
+        
+   
 	</section>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/popper.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/main.js"></script>
-
+   
 	</body>
 </html>
 

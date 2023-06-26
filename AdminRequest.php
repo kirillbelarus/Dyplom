@@ -86,8 +86,27 @@
                     </li>
                 </div>
         </nav>
-        <form action="" method="POST" style="margin-left:40%; margin-top:100px;">
-            <?php
+        <?php
+            
+            $link_5 = mysqli_connect("localhost", "root", "", "course", 3306);
+            $check = "SELECT count(id_request) as count_id FROM Request";
+            if($result5 = mysqli_query($link_5, $check))
+            {
+                while( $row = mysqli_fetch_assoc($result5) )
+                {
+                    $_SESSION['count_bron'] = $row['count_id'];
+                }
+            
+            mysqli_free_result($result5);
+                }
+            if($_SESSION['count_bron']==0)
+            {
+                echo "<p style='font-size: 50px;
+                text-align: center;margin-top:15%'>Заявок нет</p>";
+            }
+            else{
+                echo " <form action='' method='POST' style='margin-left:40%; margin-top:100px;'>";
+           
                 if(isset($_POST['name_afish']))
                 {
                   $value = $_POST['name_afish'];
@@ -97,23 +116,22 @@
                   $value = "";
                 }
                 echo "<input placeholder='введите логин пользователя..' name='name_afish' value='$value'/>";  
-            ?>
+       
             
-            <button type="submit">Поиск</button>
-        </form>
-    <table border="1" style="width:75%; margin-right:auto; margin-left:auto; margin-top:100px;" class="styled-table">
-        <tr style='text-align: center;'>
-            <th>Почта пользователя</th>
-            <th>Логин пользователя</th>
-            <th>Наименование музея</th> 
-            <th>Адрес музея</th>
-            <th>Номер телефона</th>
-            <th>Время работы</th>
-            <th>Дата отправления заявки</th>
-            <th></th>
-            <th></th> 
-        </tr>
-        <?php
+                echo "<button type='submit'>Поиск</button>";
+                echo " </form>";
+                echo "<table border='1' style='width:75%; margin-right:auto; margin-left:auto; margin-top:100px;' class='styled-table'>";
+                echo " <tr style='text-align: center;'>";
+                echo "   <th>Почта пользователя</th>";
+                echo "  <th>Логин пользователя</th>";
+                echo "  <th>Наименование музея</th> ";
+                echo "  <th>Адрес музея</th>";
+                echo "  <th>Номер телефона</th>";
+                echo "  <th>Время работы</th>";
+                echo "  <th>Дата отправления заявки</th>";
+                echo "  <th></th>";
+                echo "  <th></th> ";
+                echo " </tr>";
              $link = mysqli_connect("localhost", "root", "", "course", 3306);
                 if(isset($_POST['name_afish']))
                 {
@@ -147,7 +165,7 @@
                 echo '</table>';
                 mysqli_free_result($result);
                 }
-                    
+            }     
             ?>
 	</section>
 
@@ -158,4 +176,3 @@
 
 	</body>
 </html>
-

@@ -85,11 +85,11 @@ create table Comments(
 insert into Organiz values(1,'Girel',12131,'kotjmot@yandex.by','dfhsjfh');
 insert into Organiz values(2,'Ivan',21131,'zkrokaz@yandex.ru','dfhsjfh');
 insert into Organiz values(3,'Lesha',952131,'kartoshka@yandex.by','dfhsjfh');
-
-insert into Catalog_Museum values(1,'Национальный художественный','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/99.jpg',1);
-insert into Catalog_Museum values(2,'Национальный исторический','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/56.jpg',2);
-insert into Catalog_Museum values(3,'Дом Ваньковичей','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/vank.jpg',3);
-insert into Catalog_Museum values(4,'Янка Купала','ул. Алеся Дудара, 7','+ 375 163 421524, + 375 163 421100','yanka@yandex.by','16:45-18:12','./images/Yanka.jpg',1);
+		
+insert into Catalog_Museum values(4,'Национальный художественный','ул. Ленина, 20','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/99.jpg',1);
+insert into Catalog_Museum values(2,'Национальный исторический','ул. Интернациональная ул., 33А','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/56.jpg',2);
+insert into Catalog_Museum values(3,'Дом Ваньковичей','ул. Интернациональная ул., 33А','+ 375 163 421524, + 375 163 421100','kgirel@yandex.by','16:45-18:12','./images/vank.jpg',3);
+insert into Catalog_Museum values(1,'Янка Купала','ул. Янки Купалы, 4','+ 375 163 421524, + 375 163 421100','yanka@yandex.by','16:45-18:12','./images/Yanka.jpg',1);
 
 insert into Afisha values(1,1,1,'ждите нас, звезды!','выставка','2023-11-11','2023-12-31','./images/1.jpg',5,'художественная');
 insert into Afisha values(2,2,2,'секреты нового года','лекция','2023-11-11','2023-12-31','./images./2.jpg',15,'этнографическая');
@@ -109,58 +109,16 @@ insert into Bron values(1,1,1,1,'2022-11-11','16:45',5,"да");
 insert into Bron values(2,3,2,6,'2023-11-11','16:45',1,"нет");
 insert into Bron values(3,3,3,4,'2022-12-11','16:45',2,"да");
 
-insert into Request values(1,1,'kgirel@yandex.by','kirill1991','балетный','golodeda,12-6',141341,'xren','13:00-18:00','12-12-2022');
+insert into Request values(1,1,'kgirel@yandec.by@yandex.by','kirill1991','балетный','golodeda,10','+375333333333','dasdad','13:00-18:00','2023-01-31');
 
 insert into Comments values(1,2,2,'Мы ставим на каждый Новый год только естественную ёлку. Почему? Выгоднее же приобрести один раз искусственную и больше не мучиться с поиском натуральной перед праздником. Также сравню ель-2023 с предыдущими нашими ёлками.',4);
 insert into Comments values(2,2,2,'Мы ставим на каждый Новый год только естественную ёлку. Почему? Выгоднее же приобрести один раз искусственную и больше не мучиться с поиском натуральной перед праздником. Также сравню ель-2023 с предыдущими нашими ёлками.',4);
 insert into Comments values(3,2,1,'Мы ставим на каждый Новый год только естественную ёлку. Почему? Выгоднее же приобрести один раз искусственную и больше не мучиться с поиском натуральной перед праздником. Также сравню ель-2023 с предыдущими нашими ёлками.',4);
 insert into Comments values(4,3,3,'Мы ставим на каждый Новый год только естественную ёлку. Почему? Выгоднее же приобрести один раз искусственную и больше не мучиться с поиском натуральной перед праздником. Также сравню ель-2023 с предыдущими нашими ёлками.',4);
 insert into Comments values(5,2,2,'Мы ставим на каждый Новый год только естественную ёлку. Почему? Выгоднее же приобрести один раз искусственную и больше не мучиться с поиском натуральной перед праздником. Также сравню ель-2023 с предыдущими нашими ёлками.',4);
--- select Afisha.num_afish as num_afish, Afisha.name_afish as name_afish 
--- FROM Afisha inner join Catalog_Museum  where Afisha.id_museum=1
--- group by Afisha.num_afish;
-#SELECT Afisha.num_afish as num_afish, Comments.comment_text as comment_text, Comments.rating as rating, Comments.id_user as id_user, Users.login_user 
-#FROM Comments inner join Afisha on Comments.num_afish = Afisha.num_afish inner join Users on Users.id_user=Comments.id_user where Users.id_user = 2;
--- select num_afish, type_event FROM Afisha
--- group by type_event;
-#SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating 
-#FROM Afisha left join Comments on Comments.num_afish = Afisha.num_afish
-#group by Afisha.name_afish order by avg_rating desc;
--- select Afisha.cost_ticket*Bron.kol_chel as sum,Afisha.cost_ticket as cost_ticket,Afisha.num_afish as num_afish,Afisha.photo as photo,Afisha.name_afish as name_afish,Bron.kol_chel as kol_chel
--- from Bron inner join Afisha on Bron.num_afish = Afisha.num_afish
--- group by Afisha.num_afish;
-#SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating 
-#FROM Afisha left join Comments on Comments.num_afish = Afisha.num_afish 
-#where Afisha.cost_ticket>9
-#group by Afisha.name_afish order by avg_rating desc;
 
 
-#SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating, Afisha.cost_ticket as cost_ticket
-#FROM Afisha left join Comments on Comments.num_afish = Afisha.num_afish
-#where Afisha.cost_ticket = 0 group by Afisha.name_afish order by avg_rating desc;
--- SELECT num_afish,min(data_start), max(data_end) FROM Afisha where 
--- data_start = (select min(data_start) from Afisha) and data_end =(select max(data_start) from Afisha)
--- group by num_afish;
-
-#SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating, Afisha.cost_ticket as cost_ticket, Afisha.genre_afisha as genre_afisha 
-#FROM Afisha left join Comments on Comments.num_afish = Afisha.num_afish 
-#where Afisha.genre_afisha = 'художественный' group by Afisha.name_afish order by avg_rating desc;
-
-#SELECT Afisha.num_afish as num_afish, min(Afisha.data_start) as data_start, max(Afisha.data_end) as data_end 
-#from Afisha where data_start = (select min(data_start) from Afisha) and data_end = (select max(data_end) from Afisha); 
-
-#SELECT Catalog_Museum.id_museum as id_museum,Catalog_Museum.name_museum as name_museum, count(Afisha.num_afish) as count_afish,Organiz.fio_org as fio, 
-#Catalog_Museum.adress as adress,Catalog_Museum.tel as tel,Catalog_Museum.e_mail as e_mail,Catalog_Museum.time_work as time_work 
-#from Catalog_Museum inner join Organiz on Catalog_Museum.id_org = Organiz.id_org left join Afisha on  Catalog_Museum.id_museum = Afisha.id_museum
-#group by id_museum;
-
-SELECT Users.id_user as id_user, Users.login_user as login_user,
-Users.e_mail as e_mail,count(Comments.id_comment) as count_comment, avg(Comments.rating) as avg_rating
-from Comments right join Users on Comments.id_user = Users.id_user
-group by id_user;
-
-SELECT Afisha.num_afish as num_afish,Afisha.data_start as data_start,Afisha.data_end as data_end,Afisha.photo as photo, Afisha.name_afish as name_afish, Catalog_Museum.id_museum 
-from Afisha inner join Catalog_Museum on Afisha.id_museum = Catalog_Museum.id_museum where type_event = 'выставка';
-
-#SELECT Afisha.num_afish as num_afish, Afisha.photo as photo, max(Comments.rating) as rating,Afisha.name_afish as name_afish
-#from Afisha left join Comments on Comments.num_afish = Afisha.num_afish where rating = (Select max(rating) from Afisha) and ;
+SELECT Afisha.num_afish as num_afish,Afisha.name_afish as name_afish,Afisha.data_start as data_start,
+                    Afisha.data_end as data_end,Afisha.photo as photo,Afisha.cost_ticket as cost_ticket, Catalog_Museum.id_museum as id_museum from Afisha  inner join Catalog_Museum on Afisha.id_museum = Catalog_Museum.id_museum where num_afish = 1;
+                    
+SELECT count(id_bron) FROM Bron;                   
