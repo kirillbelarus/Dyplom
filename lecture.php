@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Website menu 06</title>
+  	<title>Лекции</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -43,6 +43,8 @@
 						<li class="nav-item"><a href="./exposition.php" class="nav-link">Выставки</a></li>
 						<li class="nav-item active"><a href="lecture.php" class="nav-link">Лекции</a></li>
 						<?php 
+						if(isset($_COOKIE['org']))
+						{
 							if($_COOKIE["org"] == 1):
 							echo "<li class='nav-item '>";
 							echo "<a href='add_afisha.php' class='nav-link active'>Добавить афишу</a>";
@@ -51,6 +53,7 @@
 							echo "<a href='add_museum.php' class='nav-link'>Добавить музей</a>";
 							echo "</li>";
 							endif;
+						}
 						?>	
 					</ul>
 				</div>
@@ -93,7 +96,12 @@
                         echo "<div class='exposition-group'>";
 						echo "<div class='info__exposition'>";
 							echo "<p style='color:#250000;'><b>Название афиши:</b> $row[name_afish]</p>";
-							echo "<p style='color:#250000;'><b>Рейтинг афиши:</b>  $row[rating]</p>";
+							if($row['rating']>0)
+							{
+								echo "<p style='color:#250000;'><b>Рейтинг афиши:</b>  $row[rating]</p>";
+							}
+							else
+								echo "<p style='color:#250000;'><b>Рейтинг афиши:</b> 0</p>";
 							echo "<p style='color:#250000;'><b>Жанр афиши:</b>  $row[genre]</p>";
 							echo "<p style='color:#250000;'><b>Дата проведения: </b> ".$row["data_start"]." – ".$row["data_end"]."</p>";
 						echo "</div>";

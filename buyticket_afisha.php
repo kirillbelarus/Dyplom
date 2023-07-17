@@ -101,7 +101,7 @@
                                 echo "<p>Стоимость одного билета: <span class='cost-ticket'>$row[cost_ticket]</span>р</p>";
                                 echo "<input type='number' placeholder='кол-во билетов' id='kol_ticket' name='kol_ticket' class='form-control' value=''> ";
     
-                                echo "<input type='text' placeholder='введите время' name='time_bron' class='form-control'>";
+                                echo "<input type='time' placeholder='введите время' name='time_bron' class='form-control'>";
                                 if($result = mysqli_query($link, "SELECT Afisha.data_start as data_start, Afisha.data_end as data_end FROM Afisha where num_afish = '$num_afish'"))
                                 {
                                     while($object = mysqli_fetch_object($result))

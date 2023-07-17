@@ -214,7 +214,13 @@
 				}
 				?>
 								</div>
-								<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Сохранить изменения</button></div>
+								<?php 
+								if(isset($_COOKIE["admin"]) || isset($_COOKIE["user"])){
+									if($_COOKIE["org"] ==1 || $_COOKIE["user"] ==1): 
+									echo "<div class='mt-5 text-center'><button class='btn btn-primary profile-button' type='submit'>Сохранить изменения</button></div>";
+									endif;
+								}
+								?>
 							</form>
 							
 						</div>
@@ -251,8 +257,8 @@
 								if(isset($_COOKIE['user']))
 								{
 									if($_COOKIE["user"] ==1):
-										// echo "<span class='border px-3 p-1 add-experience' onclick='document.location='Adminbron.php''>Посмотреть брони</span>";
-										echo "<a class='border px-3 p-1 add-experience' href='afisha_info_user.php'>Посмотреть свои брони</a>";
+										// echo "<span class='border px-3 p-1 add-experience' onclick='document.location='Adminbron.php''>Посмотреть бронирования</span>";
+										echo "<a class='border px-3 p-1 add-experience' href='afisha_info_user.php'>Посмотреть свои бронирования</a>";
 										echo " &nbsp;";
 										echo "<a class='border px-3 p-1 add-experience' href='request_org_user.php'>Подать заявку на организатора</a>";
 										echo " &nbsp;";

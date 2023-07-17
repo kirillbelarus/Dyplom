@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>add</title>
+  	<title>Добавление музея</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -70,7 +70,7 @@
 					</div>
 				</li>
 			</div>
-		</nav>
+	</nav>
 
     <div class="grid_afisha2 adding-section">
       <form class="adding__afisha" enctype="multipart/form-data" action="./add2_museum.php" method="post">
@@ -78,6 +78,7 @@
                 <input type="text" placeholder="введите адрес" class="form-control" name="adress">
                 <input type="text" placeholder="введите телефон" class="form-control" name="telephone">
                 <input type="text" placeholder="введите почту" class="form-control" name="email">
+                <input type="text" placeholder="введите время работы" class="form-control" name="time_work">
                 <input type="text" placeholder="введите время работы" class="form-control" name="time_work">
                 
                 <img id="image" src="#" alt="" />						

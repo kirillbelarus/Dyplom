@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Website menu 06</title>
+  	<title>Главная страница</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -73,10 +73,16 @@
 						echo "<div class='swiper-wrapper'>";
 							while( $row = mysqli_fetch_assoc($result) )
 							{
-								echo "<div class='swiper-slide'>
-								<img src=$row[photo] alt='1'>
-								<p class='swiper-text'>$row[name_museum]</p>
-								</div>";
+								echo "<div class='swiper-slide'>";
+									echo "<form action='museum_info.php' class='grid_img' method='post'>";
+										echo "<button value='$row[id_museum]' name='id_museum' class='accept_form'>";
+											echo "<img src='$row[photo]' alt='1'>";
+											echo "<p class='swiper-text'>$row[name_museum]</p>";
+										echo "</button>";
+									echo "</form>";
+								// echo "<form action='exh_info.php' class='grid_img' method='post'>";
+								// echo "<button value='$row[id_museum]' name='call' class='accept_form'>";
+								echo "</div>";
 					
 							}
 						echo "</div>";
@@ -112,7 +118,15 @@
 						echo "<div class='swiper-wrapper'>";
 					while( $row = mysqli_fetch_assoc($result2) )
 					{
-						echo "<div class='swiper-slide'><img src=$row[photo] alt='1'></div>";	
+						echo "<div class='swiper-slide'>";
+							echo "<form action='exh_info.php' method='post'>";
+							echo "<input type='submit' id='$row[num_afish]' value='$row[num_afish]' class='button_afisha' name='call'>";
+							echo "<label for='$row[num_afish]'>";
+							echo "<img src=$row[photo] alt='1'>";
+							echo "</label>";
+							// echo "</button>";
+							echo "</form>";
+						echo "</div>";	
 					}
 						echo "</div>";
 						echo "<div class='swiper-button-prev'>";

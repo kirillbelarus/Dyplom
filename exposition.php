@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Website menu 06</title>
+  	<title>Выставки</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -99,10 +99,10 @@
 			{
 				while( $row = mysqli_fetch_assoc($result) )
 				{
-					if($row['rating'] == null)
-                    {
-                        $row['rating'] = 5;
-                    }
+					// if($row['rating'] == null)
+                    // {
+                    //     $row['rating'] = 5;
+                    // }
 					echo "<form action='exh_info.php' class='grid_img' method='post'>";
 						echo "<button value='$row[num_afish]' name='call' class='accept_form'>";
 							echo "<img src='$row[photo]' width='210' height='300'>";
@@ -110,10 +110,15 @@
 						echo "</button>";
                         echo "<div class='exposition-group'>";
                             echo "<div class='info__exposition'>";
-                                echo "<p style='color:#250000;'>Название афиши: $row[name_afish]</p>";
-                                echo "<p style='color:#250000;'>Рейтинг афиши: $row[rating]</p>";
-                                echo "<p style='color:#250000;'>Жанр афиши: $row[genre]</p>";
-                                echo "<p style='color:#250000;'>Дата проведения: ".$row["data_start"]." – ".$row["data_end"]."</p>";
+                                echo "<p style='color:#250000;'><b>Название афиши:</b> $row[name_afish]</p>";
+                                if($row['rating']>0)
+								{
+									echo "<p style='color:#250000;'><b>Рейтинг афиши:</b>  $row[rating]</p>";
+								}
+								else
+									echo "<p style='color:#250000;'><b>Рейтинг афиши:</b> 0</p>";
+                                echo "<p style='color:#250000;'><b>Жанр афиши: $row[genre]</b></p>";
+                                echo "<p style='color:#250000;'><b>Дата проведения: ".$row["data_start"]." – ".$row["data_end"]."</b></p>";
                             echo "</div>";
                             echo "<div class='group-of-btns'>";
 							echo "</form>";

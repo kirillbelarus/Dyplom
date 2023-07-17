@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Website menu 06</title>
+    <title>Афиша</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -193,7 +193,7 @@
 	   
 			 $sql = "SELECT Afisha.num_afish as num_afish, Afisha.name_afish as name_afish, Afisha.photo as photo, avg(Comments.rating) as avg_rating, Afisha.cost_ticket as cost_ticket FROM Afisha left join Comments on Comments.num_afish = 
 			 Afisha.num_afish" . $where . $newString . "group by Afisha.name_afish order by avg_rating desc";
-			 
+			
 			if ($result = mysqli_query($link, $sql)) 
 			{
 				while( $row = mysqli_fetch_assoc($result) )
